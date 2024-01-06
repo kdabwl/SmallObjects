@@ -11,7 +11,7 @@ typedef struct Small$Object {
 #pragma pack()
 } Small$Object;
 ```
-This is sufficient for the `compiler` to emit proper code for the memory reference `anOop->inMemory`. Also, the `class header` bits are not seen (but can be addressed using `&anOop[0]` as base for offset). Thus, the first few `fixed field`s of `theHeap` are declared:
+This is sufficient for the `compiler` to emit proper offset in machine instructions for the memory reference `anOop->inMemory`. Also, the `class header` bits are not seen (but can be addressed using `&anOop[0]` as base for offset). Thus, the first few `fixed field`s of `theHeap` are declared:
 ```
 typedef struct Object$Memory {
 #pragma pack(1)
