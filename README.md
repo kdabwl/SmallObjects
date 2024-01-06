@@ -1,5 +1,30 @@
 Oh, well: a Readme is due and it shall be about design, ideas, desiderata, problems and how that was made to work. I'll make the Readme a log and add new items top down. Enjoy!
 
+### 3. telling the `compiler` about the `fixed field`s needed by the `Interpreter`
+
+All instances `inherit` the `fixed field`s which have already been declared in their respective `superclass`. This must have had a beginning and here we meet the `odd` tagged `oop` again:
+```
+typedef struct Small$Object {
+#pragma pack(1)
+    unsigned char $i$n$M$e$m$o$r$y$[sizeof(char)];
+    oop inMemory[0];
+#pragma pack()
+} Small$Object;
+```
+This is sufficient for the `compiler` to emit proper code for the memory reference `anOop->inMemory`. Also, the `class header` bits are not seen (but can be addressed using `&anOop[0]` as base for offset). Thus, the first few `fixed field`s of `theHeap` are declared:
+```
+typedef struct Object$Memory {
+#pragma pack(1)
+	unsigned char $i$n$M$e$m$o$r$y$[sizeof(Small$Object)];
+	oop nilObj /* boot's ²nd object */;
+	oop formatInfo /* 36r686m32, or 36rarm32f */;
+	oop systemKeys /* anArray associated ↔ k:k ↔ with items in my variaPart */;
+	oop trueObj, falseObj;
+	oop newMethod …
+#pragma pack()
+} Object$Memory;
+```
+
 ### 2. interleaving method activation and dispatch of primitives
 
 One of the goals in SmallObjects is, to do high-level code as much as essential, low-level as little as possible. Therefore, `sending a message` has the same calling convention (`stdcall` with oop receiver) as dispatch of primitives (tradition since Smalltalk-80 et alii):
