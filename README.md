@@ -23,7 +23,7 @@ The `ObjectMemory` instance `theHeap` has several fields: the `nil` oop, also th
 ```
 _Thread_local oop Thread$isolated$Heap;
 ```
-This `oop` is assigned (trivial from `sbrk`, elaborate from `mmap`) once the `main` (or other launcher) gets control. The `_Thread_local` storage class has became rather bugfree on many platforms. It is used this way:
+This `oop` is assigned (trivial from `sbrk`, elaborate from `mmap`) once the `main` (or other launcher) gets control. The `_Thread_local` storage class has became rather bugfree on many platforms. In `SmallObjects` it is used this way:
 ```
  ObjectMemory* theHeap = (ObjectMemory*)Thread$isolated$Heap;
 ```
