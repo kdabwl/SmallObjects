@@ -8,7 +8,7 @@ When talented craftsmen come to your construction site (of ideas, what else), th
 requestResponse := requestResponse taskDesired perform: #realization with: requestResponse.
 ^requestResponse
 ```
-This shall be the general scheme; we now add `garbage collection`:
+This shall be the general scheme for contract work; we now add `garbage collection`:
 ```
 | tideLevel := theHeap garbageCollectMost; tideLevel. requestResponse := self … |
 requestResponse := requestResponse taskDesired perform: #realization with: requestResponse.
