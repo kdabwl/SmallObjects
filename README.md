@@ -2,7 +2,7 @@ Oh, well: a Readme is due and it shall be about design, ideas, desiderata, probl
 
 ### 2. interleaving method activation and dispatch of primitives
 
-One of the goals in SmallObjects is, to do high-level code as much as essential, low-level as little as possible. Therefore, method activation has the same calling convention (`stdcall`) as dispatch of primitives:
+One of the goals in SmallObjects is, to do high-level code as much as essential, low-level as little as possible. Therefore, `sending a message` has the same calling convention (`stdcall` with oop receiver) as dispatch of primitives (tradition since Smalltalk-80 et alii):
 ```
 push aReceiver -- or use the one already on stack (at tos);
 push (numArity) argument/s;
