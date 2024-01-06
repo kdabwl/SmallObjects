@@ -1,5 +1,21 @@
 Oh, well: a Readme is due and it shall be about design, ideas, desiderata, problems and how that was made to work. I'll make the Readme a log and add new items top down. Enjoy!
 
+2. interleaving method activation and dispatch of primitives
+
+One of the goals in SmallObjects is, to do high-level code as much as essential, low-level as little as possible. Therefore, method activation has the same calling convention (stdcall) as dispatch of primitives:
+```
+push aReceiver -- or use the one already on stack;
+push (numArity) argument/s;
+dispatch ⁱth primitive; or
+invoke ⁱth literal (a method object)
+either forget the returned value, or replace the receiver location by it, or push it on the stack;
+```
+The difference between `dispatch` and `invoke` is just the causing bytecode, same so with the returned value. However, the primitive may fail -- and therefore delegate to a fallback method. In that case the operation is like
+```
+theMethod := aFallbackMethod;
+```
+Since the `arity` of the current `activation` is same as that of aFallbackMethod, nothing else is to worry about (given the assignment does set up for `next instruction`). In another posting the role and viability of `theMethod` will be addressed, here we note that it is a `special variable` belonging to the current `activation`.
+
 1. the SmallObjects memory & layout & format spec
 
 From item 0 (below) there are already two classes, `Character` and `SmallInteger` which must describe their respective instances. This and all other, non-depictor, objects reside in ObjectMemory. A _Class_ has (at least) a _format_ field which tells the layout (i.e. number of fixed fields, characteristics of variable data) of new instances. For easing the work of allocation and garbage collection, instances in memory are prepended by a `class header` and the variable part by another `varia data` header. The `varia data` header does not occupy space in memory if the `format` spec says so. Thus the instances are arranged consecutivly in object memory -- until a `garbage collector` finds they are no longer referenced.
