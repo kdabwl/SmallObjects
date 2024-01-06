@@ -5,7 +5,7 @@ Oh, well: a Readme is due and it shall be about design, ideas, desiderata, probl
  static oop jumpTargetRoutines[] = {(oop)&&¹st,(oop)&&²nd,…,(oop)&&ⁿth};
  asm goto("jump *%0"::"r"(jumpTargetRoutines[ⁱth])::¹st,²nd,…,ⁿth /*labels*/);
 ```
-This statement we want for jumping according to `computed label jumpTable[ⁱth]`; there are _not_ many [asm goto](https://gcc.gnu.org/onlinedocs/gcc/Extended-Asm.html#:~:text=asm%20goto%20allows) examples which demonstrate the previous. At first, the statement does not jump to any of the named labels -- this is proforma only so that C·compiler knows expected branch targets. At second, the computed target is passed to the statement -- which indeed emits code for the effective jump. There are many things to consider: how the routines at the branch targets have to be set up, how to act, and to go further in their enclosing `Interpreter loop`; these tests are work in progress at the time of this writing.
+This statement we want for jumping according to `computed label jumpTargetRoutines[ⁱth]`; there are _not_ many [asm goto](https://gcc.gnu.org/onlinedocs/gcc/Extended-Asm.html#:~:text=asm%20goto%20allows) examples which demonstrate the previous. At first, the statement does not jump to any of the named labels -- this is proforma only so that C·compiler knows expected branch targets. At second, the computed target is passed to the statement -- which indeed emits code for the effective jump. There are many things to consider: how the routines at the branch targets have to be set up, how to act, and to go further in their enclosing `Interpreter loop`; these tests are work in progress at the time of this writing.
 
 ### 7. &lt;this item intentionally left empty, for later&gt;
 
