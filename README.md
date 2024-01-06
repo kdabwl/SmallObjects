@@ -11,7 +11,7 @@ typedef struct Small$Object {
 #pragma pack()
 } Small$Object;
 ```
-This is sufficient for the `compiler` to emit proper offset in machine instructions for the memory reference `anOop->inMemory`. Also, the `class header` bits are not seen (but can be addressed using `&anOop[0]` as base for offset). Thus, the first few `fixed field`s of `theHeap` are declared:
+This is sufficient for the `compiler` to emit proper offset in machine instructions for the memory reference `anOop->inMemory`. Also, the `class header` bits are not seen (but can be addressed using `&anOop[0]` as base for offset). Thus, the first few `fixed field`s of `theHeap` (see 1. memory layout, below) are declared:
 ```
 typedef struct Object$Memory {
 #pragma pack(1)
@@ -26,7 +26,7 @@ typedef struct Object$Memory {
 #pragma pack()
 } Object$Memory;
 ```
-On the side, there are CPU chips which enable developers to trapping misaligned memory access; when the native CPU supports this, the `SmallObjects Interpreter` runtime is wrapped by this hardware support (and unwrapped around invocation of Linux system function -- who could no care less about alignment):
+On the side, there are CPU chips which enable developers to trapping misaligned memory access; when the native CPU supports this, the `SmallObjects Interpreter` runtime is wrapped by this hardware support (and unwrapped around invocation of `OS` system function -- who could no care less about alignment):
 ```
 …asm("pushfl;xorl $0x40000,(%esp);popfl")…
 ```
