@@ -4,7 +4,19 @@ Oh, well: a Readme is due and it shall be about design, ideas, desiderata, probl
 
 There are situations where a `method activation` can see that the decisions made, in a call site, for branching, could have been more to the case. If the decisions were a piece of bits, we want to move that piece either closer to the call site or closer to the callee. This results in a basically free-programmable Polymorphic Inline Cache. When the compiler has no choice, as in e.g. compiling `self zork`, it defers to guard the sender side with `self doesNotUnderstand: #zork`.<br>
 If, on the other side, there can only be one implementor of e.g. `#evaluate:in:to:notifying:ifFail:`, it is sufficient to guard the implementor side with `(self class inheritsFrom: theMethod methodClass) or: [self doesNotUnderstand: theMethod selector]`. Contrast this with `method lookup` where `selectors` (in perhaps huge dictionaries) are searched for -- here we 'only' check `inheritance relations`.<br>
-The `SmallObjects compiler` can automate this and add a &lt;pragma …&gt; to the `compiled method`. This is made available for editing the `method source`. At the present time, the mechanism/s can be added manually but there is as yet no tool support. Yet the `primitiveInheritsFrom_or_` is already available and used.
+The `SmallObjects compiler` can automate this and add a &lt;pragma …&gt; to the `compiled method`. This is made available for editing the `method source`. At the present time, the mechanism/s can be added manually but there is as yet no tool support. Yet the `primitiveMethodclassInheritanceOr_` is already available and used.<br>
+Based on the previous, the `fallback method` for `primitiveAdd_` is, implemented in `Number`:
+```
+ !Number «arithmetic» + aNumber « … »!
+  " supra tail-tails for #+ primitive º1 ← primitiveAdd_ "
+  self ¹class "act as free-programmable Polymorphic Inline Cache"
+    ²== SmallInteger and: [^theMethod ← "fallback" Integer·#+];
+    ²== LargeInteger and: [^theMethod ← LargeInteger·#+];
+    ²== Fraction and: [^theMethod ← Fraction·#+];
+    ²== Float and: [^theMethod ← Float·#+];
+    ²== Point and: [^theMethod ← Point·#+].
+ ^self doesNotUnderstand: #+! !
+```
 
 ### 4. the best developed talent for the most complex task (~chiropractic to ~oneself)
 
