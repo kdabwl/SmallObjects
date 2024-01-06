@@ -1,5 +1,16 @@
 Oh, well: a Readme is due and it shall be about design, ideas, desiderata, problems and how that was made to work. I'll make the Readme a log and add new items top down (click `outline` button). Enjoy!
 
+### 8. inviting some C·compiler to jump for nirvana
+```
+ static oop nibble$code$Jumps[] = {(oop)&&¹st,(oop)&&²nd,…,(oop)&&ⁿth};
+ asm goto("jump *%0"::"r"(jumpTable[ⁱth])::¹st,²nd,…,ⁿth /*labels*/);
+```
+This statement we want for jumping according to `computed label jumpTable[ⁱth]`; there _not_ many [asm goto](https://gcc.gnu.org/onlinedocs/gcc/Extended-Asm.html#:~:text=asm%20goto%20allows) examples which demonstrate the previous. At first, the statement does not jump to any of the named labels -- this is proforma only so that C·compiler knows expected branch targets. At second, the computed target is passed to the statement -- which indeed emits code for the effective jump. There are many things to consider: how the routines at the branch targets have to be set up, to act, and to go further in their enclosing Interpreter loop; these tests are work in progress at the time of this writing.
+
+### 7. &lt;this item intentionally left empty, for later&gt;
+
+### 6. &lt;this item intentionally left empty, for later&gt;
+
 ### 5. parting-up decisions towards a responsive free-programmable Polymorphic Inline Cache
 
 There are situations where a `method activation` can see that the decisions made, in a call site, for branching, could have been more to the case. If the decisions were a piece of bits, we want to move that piece either closer to the callee or (in parts) back to the call site. This results in a basically free-programmable Polymorphic Inline Cache. When the compiler has no choice, as in e.g. compiling `self zork`, it defers to guard the sender side with `self doesNotUnderstand: #zork`.<br>
