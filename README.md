@@ -24,6 +24,11 @@ typedef struct Object$Memory {
 #pragma pack()
 } Object$Memory;
 ```
+On the side, there are CPU chips which enable developers to trapping misaligned memory access; when the native CPU supports this, the `SmallObjects Interpreter` runtime is wrapped by this hardware support (and unwrapped around invocation of Linux system function -- who could no care less about alignment):
+```
+…asm("pushfl;xorl $0x40000,(%esp);popfl")…
+```
+Such code snippets are made as `define macro` which can be translated at central place for support of other platforms (etc).
 
 ### 2. interleaving method activation and dispatch of primitives
 
