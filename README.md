@@ -21,6 +21,8 @@ typedef struct Object$Memory {
 	oop systemKeys /* anArray associated ↔ k:k ↔ with items in my variaPart */;
 	oop trueObj, falseObj;
 	oop newMethod …
+	…
+	oop variaData[0] /* oop/s of ⁱth aClass, index > 0, in this variaPart */;
 #pragma pack()
 } Object$Memory;
 ```
