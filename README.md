@@ -9,7 +9,10 @@ This statement we want for jumping according to `computed label jumpTargetRoutin
 
 ### 7. &lt;this item intentionally left empty, for later&gt;
 
-### 6. &lt;this item intentionally left empty, for later&gt;
+### 6. subcontracting to specialists trained in other fields
+
+Suppose that `ArrayedCollection`s have a _private field_ named `position`; then every of its subclasses (e.g. `ByteString`,`Array`, there are about 47 in _Squeak6r0_) is then usable as `ReadStream`; the `readLimit` field of `PositionableStream`s is the present size of the `ArrayedCollection` (default, anyways). The previous is by far the most frequent usecase of `Stream`s, and that alone deserves extra attention -- since creating a `ReadStream` on an`ArrayedCollection` doubles the cost of `garbage collection` for the respective `ArrayedCollection`. We have seen not the least in times not long ago that billionaire software shops invented `slice`d arrays for getting performance max from `positionable` access.<br>
+But where will be the _private field_ be stored? This is a question for specialists in `mixin` and `traits`.
 
 ### 5. parting-up decisions towards a responsive free-programmable Polymorphic Inline Cache
 
