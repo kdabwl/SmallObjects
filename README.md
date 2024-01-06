@@ -1,4 +1,4 @@
-Oh, well: a Readme is due and it shall be about design, ideas, desiderata, problems and how that was made to work. I'll make the Readme a log and add new items top down. Enjoy!
+Oh, well: a Readme is due and it shall be about design, ideas, desiderata, problems and how that was made to work. I'll make the Readme a log and add new items top down (click `outline` button). Enjoy!
 
 ### 3. telling the `compiler` about the `fixed field`s needed by the `Interpreter`
 
