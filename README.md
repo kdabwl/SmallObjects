@@ -7,14 +7,14 @@ One of the goals in SmallObjects is, to do high-level code as much as essential,
 push aReceiver -- or use the one already on stack;
 push (numArity) argument/s;
 dispatch ⁱth primitive; or
-invoke ⁱth literal (a method object)
-either forget the returned value, or replace the receiver location by it, or push it on the stack;
+invoke ⁱth literal (a method object);
+either forget returned value, or replace receiver location by it, else push it on the stack;
 ```
 The difference between `dispatch` and `invoke` is just the causing bytecode, same so with the returned value. However, the primitive may fail -- and therefore delegate to a fallback method. In that case the operation is like
 ```
 theMethod := aFallbackMethod;
 ```
-Since the `arity` of the current `activation` is same as that of aFallbackMethod, nothing else is to worry about (given the assignment does set up for `next instruction`). In another posting the role and viability of `theMethod` will be addressed, here we note that it is a `special variable` belonging to the current `activation`.
+Since the `arity` of the current `activation` is same as that of aFallbackMethod, nothing else is to worry about (given the assignment does set up for `next instruction`). In another posting the role and viability of `theMethod` will be addressed, here we note that it is a `special variable` belonging to, what momentarily the current `activation` is.
 
 1. the SmallObjects memory & layout & format spec
 
