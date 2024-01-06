@@ -10,7 +10,7 @@ dispatch ⁱth primitive; or
 invoke ⁱth literal (a method object);
 either forget returned value, or replace receiver location by it, else push it on the stack;
 ```
-The difference between `dispatch` and `invoke` is just the causing bytecode, same so with the returned value. However, the primitive may fail -- and therefore delegate to a fallback method. In that case the operation is like
+The difference between `dispatch` and `invoke` is just the causing bytecode, same so with the returned value. However, the primitive may fail -- and therefore delegate to a `fallback method`. In that case the operation is like
 ```
 theMethod := aFallbackMethod;
 ```
