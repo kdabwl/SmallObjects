@@ -26,7 +26,7 @@ typedef struct Object$Memory {
 #pragma pack()
 } Object$Memory;
 ```
-On the side, there are CPU chips which enable developers to trapping misaligned memory access; when the native CPU supports this, the `SmallObjects Interpreter` runtime is wrapped by this hardware support (and unwrapped around invocation of `OS` system function -- who could no care less about alignment):
+On the side, there are CPU chips which enable developers to trapping misaligned memory access; when the native CPU supports this, the SmallObjects `Interpreter runtime` is wrapped by this hardware feature (and unwrapped around invocation of `OS` system function -- who could no care less about alignment):
 ```
 …asm("pushfl;xorl $0x40000,(%esp);popfl")…
 ```
