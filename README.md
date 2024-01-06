@@ -66,6 +66,7 @@ typedef struct Object$Memory {
  oop formatInfo /* 36r686m32, or 36rarm32f */;
  oop systemKeys /* anArray associated ↔ k:k ↔ with items in my variaPart */;
  oop trueObj, falseObj;
+ oop heapCircle /* collection of forked threads */;
  oop newMethod …
 	…
  oop variaData[0] /* oop(s) of ⁱth aClass, ⁱth > 0, in this variaPart */;
