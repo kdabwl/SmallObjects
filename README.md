@@ -44,9 +44,10 @@ either forget returned value, or replace tos location by it, else push it on the
 ```
 The difference between `dispatch` and `invoke` is just the causing bytecode, same so for the returned value. However, the `primitive` may fail -- and therefore must delegate to a `fallback method`. In that case the operation is like:
 ```
-theMethod := aFallbackMethod;
+theMethod := aFallbackMethod /* acts like tailcall */;
 ```
-Since the `arity` of the current `activation` is same as that of aFallbackMethod, nothing else is to worry about (given the assignment does set up for `next instruction`). In another posting the role and viability of `theMethod` will be addressed, here we note that it is a `special variable` belonging to, what momentarily the current `activation` is.
+Since the `arity` of the current `activation` is same as that of aFallbackMethod, nothing else is to worry about (given the assignment does set up for `next instruction`). In another posting the role and viability of `theMethod` will be addressed, here we note that it is a `special variable` belonging to, what momentarily the current `activation` is.</br>
+N.B. [tailcall](https://clang.llvm.org/docs/AttributeReference.html#musttail) is in developer's hand for C·lang.
 
 ### 1. the SmallObjects memory & layout & format spec
 
