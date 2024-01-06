@@ -12,10 +12,11 @@ This shall be the general scheme; we now add `garbage collection`:
 ```
 | tideLevel := theHeap garbageCollectMost; tideLevel. requestResponse := self … |
 requestResponse := requestResponse taskDesired perform: #realization with: requestResponse.
-theHeap garbageCollectMost: tideLevel.
+theHeap garbageCollectMost: "the previous" tideLevel.
 ^requestResponse
 ```
-In the `booting from roots` system, the `garbageCollectMost*` selectors can be omitted without change of function.
+In the `booting from roots` system, the `garbageCollectMost*` selectors can be omitted (or return default/s) without change of function, if it is known what the craftsmen need -- but this the case during  `booting from roots`.<br>
+At another time and during other situations the `SmallObjects runtime` will need support in its empire to clean up `non-referenceable objects` in ObjectMemory, but not already at first.
 
 ### 3. telling the `compiler` about the `fixed field`s needed by the `Interpreter`
 
