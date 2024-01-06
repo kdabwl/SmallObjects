@@ -3,7 +3,7 @@ Oh, well: a Readme is due and it shall be about design, ideas, desiderata, probl
 ### 5. parting-up decisions towards a responsive free-programmable Polymorphic Inline Cache
 
 There are situations where a `method activation` can see that the decisions made, in a call site, for branching, could have been more to the case. If the decisions were a piece of bits, we want to move that piece either closer to the call site or closer to the callee. This results in a basically free-programmable Polymorphic Inline Cache. When the compiler has no choice, as in e.g. compiling `self zork`, it defers to guard the sender side with `self doesNotUnderstand: #zork`.<br>
-If, on the other side, there can only be one implementor of e.g. `#evaluate:in:to:notifying:ifFail:`, it is sufficient to guard the implementor side with `(self class inheritsFrom: theMethod methodClass) or: [self doesNotUnderstand: theMethod selector]`. Contrast this with `method lookup` where `selectors` (in perhaps huge dictionaries) are searched for -- here we 'only' check `inheritance relations`.<br>
+If, on the other side, there can only be one implementor of e.g. `#evaluate:in:to:notifying:ifFail:`, it is sufficient to guard the implementor side with `(self class inheritsFrom: theMethod methodClass) or: [self doesNotUnderstand: theMethod selector]`. Contrast this with `method lookup` where `selectors` (in perhaps huge dictionaries, unprogrammable at runtime …) are searched for -- here we 'only' check `inheritance relations`.<br>
 The `SmallObjects compiler` can automate this and add a &lt;pragma …&gt; to the `compiled method`. This is made available for editing the `method source`. At the present time, the mechanism/s can be added manually but there is as yet no tool support. Yet the `primitiveMethodclassInheritanceOr_` is already available and used.<br>
 Based on the previous, the `fallback method` for `primitiveAdd_` is, implemented in `Number`:
 ```
@@ -17,7 +17,6 @@ Based on the previous, the `fallback method` for `primitiveAdd_` is, implemented
     ²== Point and: [^theMethod ← Point·#+].
  ^self doesNotUnderstand: #+! !
 ```
-
 ### 4. the best developed talent for the most complex task (~chiropractic to ~oneself)
 
 When talented craftsmen come to your construction site (of ideas, what else), they bring tools and materials with them; and they clean up before they leave -- but they handover the `result`s to the patron. This is on offer for garbage collection (on `boot level, root level` and beyond) in the `SmallObjects runtime` -- and things have already been provided below. We add the concept of `temporary variables`, they are pushed on the stack during the `prolog` of `method activation`, in `Smalltalk syntax` (plus initialization during declaration):
