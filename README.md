@@ -2,7 +2,7 @@ Oh, well: a Readme is due and it shall be about design, ideas, desiderata, probl
 
 ### 4. the best developed talent for the most complex task
 
-When talented craftsmen come to your construction site (of ideas, what else), they bring tools and materials with them; and they clean up before they leave -- but they handover the `result`s to the patron. This is on offer for garbage collection (on `boot level, root level`) in the `SmallObjects runtime` -- and things have already been provided below. We add the concept of `temporary variables`, they are pushed on the stack during the `prolog` of `method activation`, in `Smalltalk syntax` (plus initialization during declaration):
+When talented craftsmen come to your construction site (of ideas, what else), they bring tools and materials with them; and they clean up before they leave -- but they handover the `result`s to the patron. This is on offer for garbage collection (on `boot level, root level` and beyond) in the `SmallObjects runtime` -- and things have already been provided below. We add the concept of `temporary variables`, they are pushed on the stack during the `prolog` of `method activation`, in `Smalltalk syntax` (plus initialization during declaration):
 ```
 | requestResponse := self provide input for craftsmen. |
 requestResponse := requestResponse taskDesired perform: #realization with: requestResponse.
