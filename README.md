@@ -11,14 +11,14 @@ This `oop` is assigned (trivial from `sbrk`, elaborate from `mmap`) once the `ma
 ```
  ObjectMemory* theHeap = (ObjectMemory*)Thread$isolated$Heap;
 ```
-All other objects in memory can only be stored in `theHeap` and the allocated space it describes. The  `varia data` items of `theHeap` instance are indexed by `classId` bits from the `class header` of instances (or defaults for `depictor`s). After the last `varia data` item of `theHeap` begins the zone of resident objects (up to the `tideLevel` mark), then the zone of jetsam (up to the `shoreline` mark). The fields `tideLevel` and `shoreline` belong to the fixed part of the ObjectMemory instance (many other not mentioned here). Surprise: all this is accessible from ordinary code and therefore from the SmallObjects `Interpreter`.
+All other objects in memory can only be stored in `theHeap` and the allocated space it describes. The  `varia data` items of `theHeap` instance are indexed by `classId` bits from the `class header` of instances (or defaults for `depictor`'s). After the last `varia data` item of `theHeap` begins the zone of resident objects (up to the `tideLevel` mark), then the zone of jetsam (up to the `shoreline` mark). The fields `tideLevel` and `shoreline` belong to the `fixed fields` of the ObjectMemory instance (many other not mentioned here). Surprise: all this is accessible from ordinary code and therefore from the SmallObjects `Interpreter`.
 
 0. how came the term `oop` into the project? the closest I found was:
 ```
 #include <stdint.h>
 typedef uintptr_t oop;
 ```
-Things which are `oop` have a tag (bit), as featured in Smalltalk-80. When object-oriented programming was introduced, is was also shown by [Tektronix with 68000](https://retrocomputingforum.com/t/smalltalk-on-the-68000-by-tektronix) microprocessor which had 16 bit bus. So, _one tag bit_ was impressive bang for the bucks. Then 32 bits microprocessors came along, also came the possibility of _two tag bits_:
+Things which are `oop` have a tag (bit), as featured in Smalltalk-80. When object-oriented programming was introduced, this was also shown by [Tektronix with 68000](https://retrocomputingforum.com/t/smalltalk-on-the-68000-by-tektronix) microprocessor which had 16 bit bus. So, _one tag bit_ was impressive bang for the bucks. Then 32 bits microprocessors came along, also came the possibility of _two tag bits_:
 ```
 if(anOop &1)
 	if(anOop &2) {/*it is *aPointer */} else {/* it is aCharacter */};
