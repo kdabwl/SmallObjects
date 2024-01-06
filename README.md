@@ -2,7 +2,7 @@ Oh, well: a Readme is due and it shall be about design, ideas, desiderata, probl
 
 1. the SmallObjects memory layout and format spec
 From item 0 (below) there are already to classes, `Character` and `SmallInteger` which must describe their respective instances. This and all other, non-depictor, objects reside in ObjectMemory. A _Class_ has (at least) a _format_ field which tells the layout (i.e. number of fixed fields, characteristics of variable data) of new instances. For easing the work of allocation and garbage collection, instances in memory are prepended by a `class header` and the variable part by another `varia data` header. The variaData header does not occupy space in memory if the _format_ spec says so. Thus the instances are arranged consecutivly in object memory -- until a `garbage collector` finds they are no longer referenced.
-There is an `ObjectMemory` which has several fields: the ´nil` oop, also the `true` and `false` oop's.
+There is an `ObjectMemory` which has several fields: the `nil` oop, also the `true` and `false` oop's.
 
 0. how came the term `oop` into the project? the closest I found was:
 ```
