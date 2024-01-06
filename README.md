@@ -1,9 +1,10 @@
 Oh, well: a Readme is due and it shall be about design, ideas, desiderata, problems and how that was made to work. I'll make the Readme a log and add new items top down (click `outline` button). Enjoy!
 
-### 5. parting-up the decisions for a responsive free-programmable Polymorphic Inline Cache
+### 5. parting-up decisions towards a responsive free-programmable Polymorphic Inline Cache
 
-There are situations where a method activation can see that the desicions made, in a call site, for branching, could have been more to the case. If the decisions were a piece of bits, we want to move that piece either closer to the call site or closer to the callee. This results in a basically free-programmable Polymorphic Inline Cache. When the compiler has no choice, as in e.g. compiling `self zork`, it defers to guard the sender side with `self doesNotUnderstand: #zork`.<br>
-If, on the other side, there can only be one implementor of e.g. `#evaluate:in:to:notifying:ifFail:`, it is sufficient to guard the implementor side with `(self class inheritsFrom: theMethod methodClass) or: [self doesNotUnderstand: theMethod selector]`. Contrast this with ´method lookup` where `selectors` (in perhaps huge dictionaries) are compared -- here we 'only' check `inheritance relations`.
+There are situations where a `method activation` can see that the decisions made, in a call site, for branching, could have been more to the case. If the decisions were a piece of bits, we want to move that piece either closer to the call site or closer to the callee. This results in a basically free-programmable Polymorphic Inline Cache. When the compiler has no choice, as in e.g. compiling `self zork`, it defers to guard the sender side with `self doesNotUnderstand: #zork`.<br>
+If, on the other side, there can only be one implementor of e.g. `#evaluate:in:to:notifying:ifFail:`, it is sufficient to guard the implementor side with `(self class inheritsFrom: theMethod methodClass) or: [self doesNotUnderstand: theMethod selector]`. Contrast this with `method lookup` where `selectors` (in perhaps huge dictionaries) are searched for -- here we 'only' check `inheritance relations`.<br>
+The `SmallObjects compiler` can automate this and add a &lt;pragma …&gt; to the `compiled method`. This is made available for editing the `method source`. At the present time, the mechanism/s can be added manually but there is as yet no tool support. Yet the `primitiveInheritsFrom_or_` is already available and used.
 
 ### 4. the best developed talent for the most complex task (~chiropractic to ~oneself)
 
