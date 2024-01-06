@@ -40,7 +40,7 @@ typedef struct Object$Memory {
  oop trueObj, falseObj;
  oop newMethod …
 	…
- oop variaData[0] /* oop/s of ⁱth aClass, index > 0, in this variaPart */;
+ oop variaData[0] /* oop(s) of ⁱth aClass, ⁱth > 0, in this variaPart */;
 #pragma pack()
 } Object$Memory;
 ```
