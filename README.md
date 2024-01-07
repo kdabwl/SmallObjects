@@ -6,11 +6,12 @@ In `SmallObjects` I want that each individual `ObjectMemory` instance _theHeap_ 
 Here is my first draft, derived from the classic `benchFib` performance benchmark.
 ```
 !Integer benchFib "handy message-heavy benchmark"
-	| subtask := [(self -1) benchFib]. interim |
-	" at >= 43 (on -m32), LargeInteger arithmetic takes over from SmallInteger "
-	self < 43 ifFalse: [interim := subtask promiseUnless: theHeap·idlerCount < 1]
-	ifTrue: [interim := subtask "do all myself"].
-	^(self -2) benchFib +interim value!!
+ | subtask := [(self -1) benchFib]. interim |
+ self < 2 ifTrue: [^1].
+ " at >= 43 (on -m32), LargeInteger arithmetic takes over from SmallInteger "
+ self < 43 ifFalse: [interim := subtask promiseUnless: theHeap·idlerCount < 1]
+ ifTrue: [interim := subtask "do all myself"].
+ ^(self -2) benchFib +interim value +1!!
 ```
 ### 8. inviting some C·compiler to jump for nirvana
 ```
