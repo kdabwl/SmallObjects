@@ -29,7 +29,7 @@ In `SmallObjects` the `methods` who access the same `private field` belong to th
 ```
  self privateField1position: 1+ self privateField1position "advance the stream's position".
 ```
-### 6. subcontracting to specialists trained in other fields
+### 6. subcontracting to specialists trained in nonconcurrent fields
 
 Suppose that `ArrayedCollection`s have a _private field_ named `position`; then every of its subclasses (e.g. `ByteString`,`Array`, there are about 47 in _Squeak6r0_) is then usable as `ReadStream`; the `readLimit` field of `PositionableStream`s is then the present size of the `ArrayedCollection` (default, anyways). The previous is by far the most frequent usecase of `Stream`s, and that alone deserves extra attention -- since creating a `ReadStream` on an`ArrayedCollection` \~doubles the cost of `garbage collection` for the respective `ArrayedCollection`. We have seen not the least in times not long ago that billionaire software shops invented `slice`d arrays for getting performance max from `positionable` access.<br>
 But where can the _private field_ be stored, without disturbing the existing integrity (etc) of `ArrayedCollection`s (and subclasses) -- that cannot be supplemented by a named field? This is a question for specialists in [`mixin` and `traits`](https://boris.unibe.ch/104671/1/Nier05eFlatteningTraitsTR.pdf).
