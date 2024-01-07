@@ -1,4 +1,4 @@
-Oh, well: a Readme is due and it shall be about design, ideas, desiderata, problems and how that was made to work. I'll make the Readme like a parchment and add new items top down (click _outline_ button). Enjoy!
+Oh, well: a Readme is due and it shall be about design, ideas, desiderata, problems and how that was made to work. I'll make the Readme like a parchment and add new sections top down (click _outline_ button). Enjoy!
 
 ### 9. recursive multiprocessing in parallel performing cores
 
@@ -22,8 +22,8 @@ This statement we want for jumping according to `computed label jumpTargetRoutin
 
 ### 7. the adaptive specialist and its carryall
 
-In the previous item (6. below) need arised for `private field`s which belong to _subcontractors_. In the `SmallObjects` system this has rather little to do with _inheritance_, the specialists are trained in fields whose intersection (material type & form, tools, etc) is mostly empty (that makes any pair of _subcontractors_ specialists). And the individual specialists posess sort of `carryall` which they do not share with other _subcontractor_ s.<br>
-The solution in `SmallObjects` is to maintain `private field`s (the `carryall`) after the last data item of the `variaPart` (of the _patron_ instance, e.g. a `ByteString` ;-). And the `class header` bits have  (plenty of room ;-) the count 0…15 of `private field`s.<br>
+In the previous section (6. below) need arised for `private field`s which belong to _subcontractors_. In the `SmallObjects` system this has rather little to do with _inheritance_, the specialists are trained in fields whose intersection (material type & form, tools, etc) is mostly empty (that makes any pair of _subcontractors_ specialists). And the individual specialists posess sort of `carryall` which they do not share with other _subcontractor_ s.<br>
+The solution in `SmallObjects` is to maintain `private field`s (the `carryall`) after the last data section of the `variaPart` (of the _patron_ instance, e.g. a `ByteString` ;-). And the `class header` bits have  (plenty of room ;-) the count 0…15 of `private field`s.<br>
 Each `private field` has a pair of `accessor`s which the _compiler_ knows are implemented for `self`. Now, to make the definition and use of skilled specialists and subcontractors not overly complicated, the respective implementations belong to a skill set (of `methods`) which is determined by the presence and absence of `selector`s. Example: … `withSkill: #next thoughNot: #nextPut:` defines the skill set of `ReadStream`s, and `withSkill: #nextPut:` defines the skill set for `ReadWriteStream`s (users of _Browser_ et alii, i.e. realworld developers, appreciate patent navigation through the jungle of _selector_ s).<br>
 In `SmallObjects` the `methods` who access the same `private field` belong to the same skill set, yet the developer can append a _suffix_ to `privateField*` `accessor`s for deconfusing the `source method` text. Example:<br>
 ```
@@ -121,7 +121,7 @@ N.B. [tailcall](https://clang.llvm.org/docs/AttributeReference.html#musttail) is
 
 ### 1. the SmallObjects memory & layout & format info
 
-From item 0 (below) there are already two classes, `Character` and `SmallInteger` which must describe their respective instances. This and all other, non-`depictors` notwithstanding, objects reside in ObjectMemory. A _Class_ has (at least) a _formatInfo_ field which tells the layout (i.e. number of fixed fields, and characteristics of `variable data`) of new (and old, existing) instances. For easing the work of allocation and garbage collection, instances allocated in memory are prepended by a `class header` and their variable part by another `varia data` header. The `varia data` and its header does not occupy space in memory if the `formatInfo` spec says so. Thus the instances are arranged consecutively in object memory -- until a `garbage collector` finds they are no longer referenced.
+From section 0 (below) there are already two classes, `Character` and `SmallInteger` which must describe their respective instances. This and all other, non-`depictors` notwithstanding, objects reside in ObjectMemory. A _Class_ has (at least) a _formatInfo_ field which tells the layout (i.e. number of fixed fields, and characteristics of `variable data`) of new (and old, existing) instances. For easing the work of allocation and garbage collection, instances allocated in memory are prepended by a `class header` and their variable part by another `varia data` header. The `varia data` and its header does not occupy space in memory if the `formatInfo` spec says so. Thus the instances are arranged consecutively in object memory -- until a `garbage collector` finds they are no longer referenced.
 The `ObjectMemory` instance `theHeap` has several _constant_ fields, for: the `nil` oop, also the `true` and `false` oop's. Beeing an instance, `ObjectMemory` has fields and `varia data`, but above all it has `absolute` location (warranted by the `OS`):
 ```
  _Thread_local oop Thread$isolated$Heap;
