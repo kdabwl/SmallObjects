@@ -3,8 +3,15 @@ Oh, well: a Readme is due and it shall be about design, ideas, desiderata, probl
 ### 9. recursive multiprocessing in parallel performing cores
 
 In `SmallObjects` I want that each individual `ObjectMemory` instance _theHeap_ is firmly associated k:k with one of the _core_ s in my _CPU_ chip. Having worked with _multiprocessor machines_ since the earliest steps of my work-life, I can't wait that my notebook performs an `oop`-rogram on all its cylinders (_core_ s) and that the (_programmable_ ) task at hand is divided into smaller _and parallel_ pieces of work, to then combine the interim results for the big whole.<br>
-Here is my draft \[sorry, work in progress\], derived from the classic `benchFib` performance benchmark.
-
+Here is my first draft, derived from the classic `benchFib` performance benchmark.
+```
+!Integer benchFib "handy message-heavy benchmark"
+	| subtask := [(self -1) benchFib]. interim |
+	" at >= 43 (on -m32), LargeInteger arithmetic takes over from SmallInteger "
+	self < 43 ifFalse: [interim := subtask promiseUnless: theHeap·idlerCount < 1]
+	ifTrue: [interim := subtask "do all myself"].
+	^(self -2) benchFib +interim value!!
+```
 ### 8. inviting some C·compiler to jump for nirvana
 ```
  static oop jumpTargetRoutines[] = {(oop)&&¹st,(oop)&&²nd,…,(oop)&&ⁿth};
