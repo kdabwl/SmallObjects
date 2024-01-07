@@ -1,5 +1,9 @@
 Oh, well: a Readme is due and it shall be about design, ideas, desiderata, problems and how that was made to work. I'll make the Readme like a parchment and add new items top down (click _outline_ button). Enjoy!
 
+### 9. recursive multiprocessing in parallel performing cores
+
+In `SmallObjects` I want that the individual `ObjectMemory` _theHeap_ instances are firmly associated k:k with one of the cores of my CPU. Having worked with _multiprocessor machines_ since the earliest steps of my work-life, I can't wait that my notebook performs `Smalltalk` on all its cylinders.
+
 ### 8. inviting some C·compiler to jump for nirvana
 ```
  static oop jumpTargetRoutines[] = {(oop)&&¹st,(oop)&&²nd,…,(oop)&&ⁿth};
