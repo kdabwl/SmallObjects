@@ -51,7 +51,7 @@ At another time and during other situations the `SmallObjects runtime` will need
 
 ### 3. telling the `compiler` about the `fixed field`s needed by the `Interpreter`
 
-All instances `inherit` the `fixed field`s which have already been declared in their respective `superclass`. This must have had a beginning and here we meet the `odd` tagged `oop` again:
+All instances `inherit` the `fixed field`s `formatInfo` which have already been declared in their respective `superclass`. This must have had a beginning and here we meet the `odd` tagged `oop` again:
 ```
 typedef struct Small$Object {
 #pragma pack(1)
@@ -101,7 +101,7 @@ N.B. [tailcall](https://clang.llvm.org/docs/AttributeReference.html#musttail) is
 
 ### 1. the SmallObjects memory & layout & format spec
 
-From item 0 (below) there are already two classes, `Character` and `SmallInteger` which must describe their respective instances. This and all other, non-`depictors` notwithstanding, objects reside in ObjectMemory. A _Class_ has (at least) a _format_ field which tells the layout (i.e. number of fixed fields, and characteristics of `variable data`) of new (and old, existing) instances. For easing the work of allocation and garbage collection, instances allocated in memory are prepended by a `class header` and their variable part by another `varia data` header. The `varia data` header does not occupy space in memory if the `format` spec says so. Thus the instances are arranged consecutively in object memory -- until a `garbage collector` finds they are no longer referenced.
+From item 0 (below) there are already two classes, `Character` and `SmallInteger` which must describe their respective instances. This and all other, non-`depictors` notwithstanding, objects reside in ObjectMemory. A _Class_ has (at least) a _formatInfo_ field which tells the layout (i.e. number of fixed fields, and characteristics of `variable data`) of new (and old, existing) instances. For easing the work of allocation and garbage collection, instances allocated in memory are prepended by a `class header` and their variable part by another `varia data` header. The `varia data` header does not occupy space in memory if the `format` spec says so. Thus the instances are arranged consecutively in object memory -- until a `garbage collector` finds they are no longer referenced.
 The `ObjectMemory` instance `theHeap` has several fields: the `nil` oop, also the `true` and `false` oop's. Beeing an instance, `ObjectMemory` has fields and `varia data`, but above all it has `absolute` location (warranted by the `OS`):
 ```
  _Thread_local oop Thread$isolated$Heap;
