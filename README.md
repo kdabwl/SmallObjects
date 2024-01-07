@@ -13,10 +13,11 @@ Oh, well: a Readme is due and it shall be about design, ideas, desiderata, probl
   check_for_break: … conditionally set ok_to_break_outer;
  } while(!ok_to_break_outer);
 ```
-Problem/s (tested only C·lang): the _inner_ loop computes bytes and bits which are also used at the _branch_ targets, so C·lang _spills_ them for later re-load; remedy: make `struct*` reference which does not exist in the stack, then access fields in the` struct*` ;<br>
-new problem/s: spilling changed a bit but it still occurs; strange: the stack is _mem_ , the struct* is _mem_ , why shuffle things around which cannot change by read-access in the _branch_ target(s) … remedy: make the fields `volatile` .<br>
+Problem/s (tested only C·lang): the _inner_ loop computes bytes and bits which are also used at the _branch_ targets, so C·lang _spills_ them for later re-load; remedy: make `struct*` reference (line before inner loop) which does not exist in the stack, then access fields in the` struct*` ;<br>
+new problem/s: spilling changed a bit but it still occurs; strange: the `stack*` is _mem_ , the `struct*` is _mem_ , why shuffle things around which cannot change by read-access in the _branch_ target routines … remedy: make the fields `volatile` .<br>
 new problem/s: spilling changed a bit but it still occurs … remedy: make the `struct*` reference `volatile`. now! _spilling no more_ , and the _function prolog_ refrained from "saving" _call-clobbered_ registers :-D<br>
-(sub-)mission accomplished, the stack is left untouched by C·lang, and the _bytecode routines_ can asm "push" and "store" and "pop" (etc) the `native` machine `stack` , without disturbing the prolog/epilog (by `calling convention` agreed upon) of C·lang compiler.
+(sub-)mission accomplished, the stack is left untouched by C·lang, and the _bytecode routines_ can asm "push" and "store" and "pop" (etc) the `native` machine `stack` , without disturbing the prolog/epilog (by `calling convention` agreed upon) of C·lang compiler.<br>
+P.S. `primitive1Add_` was used as test subject, it performed on _smi_ 3 and _smi_ 4, testing the (`stdcall` with oop receiver) calling convention.
 
 ### 9. recursive multiprocessing in parallel performing cores
 
