@@ -1,5 +1,21 @@
 Oh, well: a Readme is due and it shall be about design, ideas, desiderata, problems and how that was made to work. I'll make the Readme like a parchment and add new sections top down (click _outline_ button). Enjoy!
 
+### 10. inner (nested) loop before computed jump to branch targets, exit condition for outer loop
+```
+ ok_to_break_outer = 0;
+ do { /* interpreter loop */
+  do { /* nested loop for concatenating bytecode parms };
+  prepare and perform computed jump goto ⁱth jump target;
+  ¹st_target: … and goto check_for_break;
+  ²nd_target: … and goto check_for_break;
+	ⁿth_target: … and goto check_for_break;
+  check_for_break: … conditionally set ok_to_break_outer;
+ } while(!ok_to_break_outer);
+```
+Problem/s (tested only C·lang): the inner loop computes bytes and bits which are also used at the branch targets, so C·lang spills them for later re-load; remedy: make a struct* reference which does not exists in the stack, then access fields in the struct*;<br>
+new problem/s: spilling changed a bit but it still occurs; strange: the stack is mem, the struct* is mem, why shuffle things around which cannot change by read-access in the branch target(s) … remedy: make the fields volatile.<br>
+new problem/s: spilling changed a bit but it still occurs … remedy: make the struct* volatile. now! spilling no more, and the function prolog refrained from "saving" call-clobbered registers :-D<br>
+
 ### 9. recursive multiprocessing in parallel performing cores
 
 In `SmallObjects` I want that each individual `ObjectMemory` instance _theHeap_ is firmly associated k:k with one of the _core_ s in my _CPU_ chip. Having worked with _multiprocessor machines_ since the earliest steps of my work-life, I can't wait that my notebook performs an `oop`-rogram on all its cylinders (_core_ s) and that the (_programmable_ ) task at hand is divided into smaller _and parallel_ pieces of work, to then combine the interim results for the big whole.<br>
