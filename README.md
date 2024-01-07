@@ -5,16 +5,18 @@ Oh, well: a Readme is due and it shall be about design, ideas, desiderata, probl
  ok_to_break_outer = 0;
  do { /* interpreter loop */
   do { /* nested loop for concatenating bytecode parms };
-  prepare and perform computed jump goto ⁱth jump target;
+  prepare & perform computed jump goto ⁱth jump target (announce "memory" clobber);
   ¹st_target: … and goto check_for_break;
   ²nd_target: … and goto check_for_break;
-	ⁿth_target: … and goto check_for_break;
+  …
+  ⁿth_target: … and goto check_for_break;
   check_for_break: … conditionally set ok_to_break_outer;
  } while(!ok_to_break_outer);
 ```
-Problem/s (tested only C·lang): the inner loop computes bytes and bits which are also used at the branch targets, so C·lang spills them for later re-load; remedy: make a struct* reference which does not exists in the stack, then access fields in the struct*;<br>
-new problem/s: spilling changed a bit but it still occurs; strange: the stack is mem, the struct* is mem, why shuffle things around which cannot change by read-access in the branch target(s) … remedy: make the fields volatile.<br>
-new problem/s: spilling changed a bit but it still occurs … remedy: make the struct* volatile. now! spilling no more, and the function prolog refrained from "saving" call-clobbered registers :-D<br>
+Problem/s (tested only C·lang): the _inner_ loop computes bytes and bits which are also used at the _branch_ targets, so C·lang _spills_ them for later re-load; remedy: make `struct*` reference which does not exist in the stack, then access fields in the` struct*` ;<br>
+new problem/s: spilling changed a bit but it still occurs; strange: the stack is _mem_ , the struct* is _mem_ , why shuffle things around which cannot change by read-access in the _branch_ target(s) … remedy: make the fields `volatile` .<br>
+new problem/s: spilling changed a bit but it still occurs … remedy: make the `struct*` reference `volatile`. now! _spilling no more_ , and the _function prolog_ refrained from "saving" _call-clobbered_ registers :-D<br>
+(sub-)mission accomplished, the stack is left untouched by C·lang, and the _bytecode routines_ can asm "push" and "store" and "pop" (etc) the `native` machine `stack` , without disturbing the prolog/epilog (by `calling convention` agreed upon) of C·lang compiler.
 
 ### 9. recursive multiprocessing in parallel performing cores
 
