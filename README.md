@@ -9,9 +9,9 @@ This statement we want for jumping according to `computed label jumpTargetRoutin
 
 ### 7. the adaptive specialist and its carryall
 
-In the previous item (6. below) need arised for `private field`s which belong to subcontractors. In the `SmallObjects` system this rather little to do with inheritance, the specialists are trained in fields whose intersection (material type & form, tools, etc) is empty (that makes any pair of them specialists).<br>
+In the previous item (6. below) need arised for `private field`s which belong to _subcontractors_. In the `SmallObjects` system this has rather little to do with _inheritance_, the specialists are trained in fields whose intersection (material type & form, tools, etc) is mostly empty (that makes any pair of _subcontractors_ specialists).<br>
 The solution in `SmallObjects` is to maintain `private field`s after the last data item of the `variaPart`. And the `class header` bits have plenty of room ;-) to count for 0…15 `private field`s.<br>
-Each `private field` has a pair of `accessor`s which the _compiler_ knows are implemented for `self`. Now, to make the definition and use of skilled specialists and subcontractors not overly complicated, the respective implementation belong to a skill set (set of `methods`) which is determined by the presence and absence of `selector`s. Example: … `withSkill: #next thoughNot: #nextPut:` defines the skill set of `ReadWriteStream`s, and `withSkill: #nextPut:` defines the skill set for `ReadStream`s
+Each `private field` has a pair of `accessor`s which the _compiler_ knows are implemented for `self`. Now, to make the definition and use of skilled specialists and subcontractors not overly complicated, the respective implementations belong to a skill set (of `methods`) which is determined by the presence and absence of `selector`s. Example: … `withSkill: #next thoughNot: #nextPut:` defines the skill set of `ReadWriteStream`s, and `withSkill: #nextPut:` defines the skill set for `ReadStream`s
 
 ### 6. subcontracting to specialists trained in other fields
 
