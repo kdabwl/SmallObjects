@@ -24,7 +24,7 @@ P.S. `primitive1Add_` was used as test subject, it performed on _smi_ 3 with _sm
 ### 9. recursive multiprocessing in parallel performing cores
 
 In `SmallObjects` I want that each individual `ObjectMemory` instance _theHeap_ is firmly associated k:k with one of the _core_ s in my _CPU_ chip. Having worked with _multiprocessor machines_ since the earliest steps of my work-life, I can't wait that my notebook performs an `oop`-rogram on all its cylinders (_core_ s) and that the (_programmable_ ) task at hand is divided into smaller _and parallel_ pieces of work, to then combine the interim results for the big whole.<br>
-Here is my first draft, derived from the classic `benchFib` performance benchmark.
+Here is my first draft, derived from the classic `benchFib` performance benchmark:
 ```
 !Integer benchFib "handy message-heavy benchmark"
  | subtask := [(self -1) benchFib]. interim |
