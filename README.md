@@ -6,6 +6,7 @@ Oh, well: a Readme is due and it shall be about design, ideas, desiderata, probl
  do { /* interpreter loop */
   do { /* nested loop for concatenating bytecode parms */ } while(more bytecode parms);
   prepare & perform computed jump goto ⁱth branch target (announce "memory" clobber);
+  /* in the bytecode routines, handle call-clobbering directly at the call site */
   ¹st_target: … and goto check_for_break;
   ²nd_target: … and goto check_for_break;
   …
@@ -13,12 +14,12 @@ Oh, well: a Readme is due and it shall be about design, ideas, desiderata, probl
   check_for_break: … conditionally set ok_to_break_outer;
  } while(!ok_to_break_outer);
 ```
-***Problem***/s (tested only C·lang): the _inner_ loop computes bytes and bits which are also used at the _branch_ targets, so C·lang [spills](https://discourse.llvm.org/t/the-current-state-of-spilling-function-calls-and-related-problems/2863) them for later re-load; remedy: make `struct*` reference (line before inner loop) which does not exist in the stack, then access fields in the` struct*` ;<br>
-***new problem***/s: spilling changed a bit but it still occurs; strange: the `stack*` is _mem_ , the `struct*` is _mem_ , why shuffle things around which can***not change by read-access*** in the _branch_ target routines … remedy: make the fields `volatile` .<br>
-***new problem***/s: spilling changed a bit but it still occurs … remedy: make the `struct*` reference `volatile`.<br>
-***Now***! ***spilling no more***, and the _function prolog_ refrained from handling _call-preserved_ registers :-D<br>
+***Problem***/s (tested only C·lang): the _inner_ loop computes bytes and bits which are also used at the _branch_ targets, so C·lang [spills](https://discourse.llvm.org/t/the-current-state-of-spilling-function-calls-and-related-problems/2863) them for later re-load; ***remedy***: make `struct*` reference (line before inner loop) which does not exist in the stack, then access fields in the` struct*` ;<br>
+***new problem***/s: spilling changed a bit but it still occurs; strange: the `stack*` is _mem_ , the `struct*` is _mem_ , why shuffle things around which can***not change by read-access*** in the _branch_ target routines … ***remedy***: make the fields `volatile` .<br>
+***new problem***/s: spilling changed a bit but it still occurs … ***remedy***: make the `struct*` reference `volatile`.<br>
+***Now***! ***spilling no more***, and the `Interpreter` _function prolog_ refrained from handling _call-preserved_ registers :-D<br>
 (sub-)mission accomplished, the stack is left untouched by C·lang, and the _bytecode routines_ can asm "push" and "store" and "pop" (etc) ***from/to*** the `native` machine `stack` , without disturbing the prolog/epilog (by `calling convention` agreed upon) of C·lang compiler.<br>
-P.S. `primitive1Add_` was used as test subject, it performed on _smi_ 3 and _smi_ 4, testing the (`stdcall` with oop receiver) calling convention.
+P.S. `primitive1Add_` was used as test subject, it performed on _smi_ 3 with _smi_ 4, testing the (`stdcall` with oop receiver) calling convention.
 
 ### 9. recursive multiprocessing in parallel performing cores
 
