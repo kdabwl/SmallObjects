@@ -13,7 +13,7 @@ Oh, well: a Readme is due and it shall be about design, ideas, desiderata, probl
   check_for_break: … conditionally set ok_to_break_outer;
  } while(!ok_to_break_outer);
 ```
-***Problem***/s (tested only C·lang): the _inner_ loop computes bytes and bits which are also used at the _branch_ targets, so C·lang _spills_ them for later re-load; remedy: make `struct*` reference (line before inner loop) which does not exist in the stack, then access fields in the` struct*` ;<br>
+***Problem***/s (tested only C·lang): the _inner_ loop computes bytes and bits which are also used at the _branch_ targets, so C·lang [spills](https://discourse.llvm.org/t/the-current-state-of-spilling-function-calls-and-related-problems/2863) them for later re-load; remedy: make `struct*` reference (line before inner loop) which does not exist in the stack, then access fields in the` struct*` ;<br>
 ***new problem***/s: spilling changed a bit but it still occurs; strange: the `stack*` is _mem_ , the `struct*` is _mem_ , why shuffle things around which can***not change by read-access*** in the _branch_ target routines … remedy: make the fields `volatile` .<br>
 ***new problem***/s: spilling changed a bit but it still occurs … remedy: make the `struct*` reference `volatile`.<br>
 ***Now***! ***spilling no more***, and the _function prolog_ refrained from handling _call-preserved_ registers :-D<br>
