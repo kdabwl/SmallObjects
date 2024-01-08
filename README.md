@@ -4,7 +4,7 @@ Oh, well: a Readme is due and it shall be about design, ideas, desiderata, probl
 ```
  ok_to_break_outer = 0;
  do { /* interpreter loop */
-  do { /* nested loop for concatenating bytecode parms */ } while(more byte bytecode parms);
+  do { /* nested loop for concatenating bytecode parms */ } while(more bytecode parms);
   prepare & perform computed jump goto ⁱth jump target (announce "memory" clobber);
   ¹st_target: … and goto check_for_break;
   ²nd_target: … and goto check_for_break;
