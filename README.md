@@ -3,7 +3,7 @@ Oh, well: a Readme is due and it shall be about design, ideas, desiderata, probl
 ### 10. inner (nested) loop before computed jump to branch targets, exit condition for outer loop
 ```
  ok_to_break_outer = 0;
- do { /* interpreter loop */
+ do { /* interpreter loop, declarations local to all the routines below */
   do { /* nested loop for concatenating bytecode parms */ } while(more bytecode parms);
   prepare & perform computed jump goto ⁱth branch target (announce "memory" clobber);
   /* in the bytecode routines, handle call-clobbering directly at the call site */
