@@ -26,7 +26,7 @@ On modern microprocessor chips, the `CPU` runs parallel to a companion `FPU`; as
 ***Now***! ***spilling no more***, and the `Interpreter` _function prolog_ refraines from handling _call-preserved_ registers :-D<br>
 (part of) mission ***accomplished***: the stack is left untouched by C·lang's inventions, thus the _bytecode routines_ can asm "push" & "store" & "pop" (etc) ***from/to*** the `native` machine `stack` , without disturbing the `Interpreter` prolog/epilog (by `calling convention` agreed upon) of C·lang compiler.<br>
 P.S. `primitive1Add_` was used as test subject, it performed on _smi_ 3 with _smi_ 4, using [builtin arithmetic with overflow checking](https://gcc.gnu.org/onlinedocs/gcc/Integer-Overflow-Builtins.html), validating by experiment the (`stdcall` with oop receiver) calling convention.<br>
-Of note: in the `primitive` routines there is ***no restriction*** for C·lang using the stack.
+Of note: in the `primitive` routines there is ***no restriction*** for C·lang on the use of the stack.
 
 ### 9. recursive multiprocessing in parallel performing cores
 
