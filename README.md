@@ -3,7 +3,7 @@ Oh, well: a Readme is due and it shall be about design, ideas, desiderata, probl
 ### 10. inner (nested) loop before computed jump to branch targets, exit condition for outer loop
 ```
  ok_to_break_outer = 0;
- do { /* interpreter loop, declarations local to all the routines below */
+ do { /* interpreter loop, local declarations common to all the following routines */
   do { /* nested loop for concatenating bytecode parms */ } while(more bytecode parms);
   prepare & perform computed jump goto ⁱth branch target (announce "memory" clobber);
   /* in the bytecode routines, handle call-clobbering directly at the call site */
@@ -19,7 +19,7 @@ Oh, well: a Readme is due and it shall be about design, ideas, desiderata, probl
 ***new problem***/s: spilling changed a bit but it still occurs … ***remedy***: declare the `struct*` reference `volatile`.<br>
 ***Now***! ***spilling no more***, and the `Interpreter` _function prolog_ refraines from handling _call-preserved_ registers :-D<br>
 (part of) mission ***accomplished***: the stack is left untouched by C·lang's inventions, thus the _bytecode routines_ can asm "push" & "store" & "pop" (etc) ***from/to*** the `native` machine `stack` , without disturbing the `Interpreter` prolog/epilog (by `calling convention` agreed upon) of C·lang compiler.<br>
-P.S. `primitive1Add_` was used as test subject, it performed on _smi_ 3 with _smi_ 4, using [builtin arithmetic with overflow checking](https://gcc.gnu.org/onlinedocs/gcc/Integer-Overflow-Builtins.html), testing the (`stdcall` with oop receiver) calling convention.
+P.S. `primitive1Add_` was used as test subject, it performed on _smi_ 3 with _smi_ 4, using [builtin arithmetic with overflow checking](https://gcc.gnu.org/onlinedocs/gcc/Integer-Overflow-Builtins.html), validating by experiment the (`stdcall` with oop receiver) calling convention.
 
 ### 9. recursive multiprocessing in parallel performing cores
 
