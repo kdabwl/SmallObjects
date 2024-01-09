@@ -165,7 +165,7 @@ All other objects in memory can only be stored in `theHeap` and the allocated sp
 #include <stdint.h>
 typedef uintptr_t oop;
 ```
-Things which are `oop` have a tag (bit), as featured in Smalltalk-80. When object-oriented programming was introduced, this was also shown by [Tektronix with 68000](https://retrocomputingforum.com/t/smalltalk-on-the-68000-by-tektronix) microprocessor which had 16 bit bus. So, _one tag bit_ was impressive bang for the bucks. Then 32 bits microprocessors came along, also came the possibility of _two tag bits_:
+Things which are `oop` have a tag (bit), as featured in Smalltalk-80. When [object-oriented programming](https://www.oscar.nierstrasz.org/posts/2023-06-12-MindTheGap#:~:text=Object%2Doriented%20programming) was introduced, this was also shown by [Tektronix with 68000](https://retrocomputingforum.com/t/smalltalk-on-the-68000-by-tektronix) microprocessor which had 16 bit bus. So, _one tag bit_ was impressive bang for the bucks. Then 32 bits microprocessors came along, also came the possibility of _two tag bits_:
 ```
  if(anOop &1)
   if(anOop &2) {/* it is *aPointer */} else {/* it is aCharacter */};
