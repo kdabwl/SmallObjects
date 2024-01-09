@@ -171,4 +171,4 @@ Things which are `oop` have a tag (bit), as featured in Smalltalk-80. When [obje
   if(anOop &2) {/* it is *aPointer */} else {/* it is aCharacter */};
  else {/* it is aSmallInteger */};
 ```
-The `SmallInteger depictor` is ready for _smi_ arithmetic (etc) and all else it can do is to cause overflow; the `Character depictor` has plenty of bits room for encoding `UTF8`. For the `*aPointer oop` the compiler can be told to use an `odd` offset instead of an `even`, all CPUs process the offset bits already in the machine instructions … nowhere systemwise untag.
+The `SmallInteger depictor` is ready for _smi_ arithmetic (etc) and all else it can do is to cause overflow; the `Character depictor` has plenty of bits room for encoding `UTF8`. For the `*aPointer oop` the compiler can be told to use an `odd` offset instead of an `even` , for `addressing fields or values`, all CPUs process the offset bits already in the machine instructions … thus in `SmallObjects` , nowhere is systemwise untag.
