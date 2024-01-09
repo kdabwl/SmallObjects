@@ -14,10 +14,10 @@ Oh, well: a Readme is due and it shall be about design, ideas, desiderata, probl
   check_for_break: … conditionally set ok_to_break_outer;
  } while(!ok_to_break_outer);
 ```
-***Problem***/s (tested only C·lang): the _inner_ loop computes bytes and bits which are also used at the _branch_ targets, so C·lang [spills](https://discourse.llvm.org/t/the-current-state-of-spilling-function-calls-and-related-problems/2863) them for later re-load; ***remedy***: make `struct*` reference (line before inner loop) which does not exist in the stack, then access fields in the` struct*` ;<br>
+***Problem***/s (tested only C·lang): the _inner_ loop computes bytes and bits which are also used at the _branch_ targets, so C·lang [spills](https://discourse.llvm.org/t/the-current-state-of-spilling-function-calls-and-related-problems/2863) them for later re-load; ***remedy***: declare `struct*` reference (line before inner loop) which does not exist in the stack, then access fields in the` struct*` ;<br>
 ***new problem***/s: spilling changed a bit but it still occurs; strange: the `stack*` is _mem_ , the `struct*` is _mem_ , why shuffle things around which can***not change by read-access*** in the _branch_ target routines … ***remedy***: make the fields `volatile` .<br>
-***new problem***/s: spilling changed a bit but it still occurs … ***remedy***: make the `struct*` reference `volatile`.<br>
-***Now***! ***spilling no more***, and the `Interpreter` _function prolog_ refrained from handling _call-preserved_ registers :-D<br>
+***new problem***/s: spilling changed a bit but it still occurs … ***remedy***: declare the `struct*` reference `volatile`.<br>
+***Now***! ***spilling no more***, and the `Interpreter` _function prolog_ refraines from handling _call-preserved_ registers :-D<br>
 (part of) mission ***accomplished***: the stack is left untouched by C·lang's inventions, thus the _bytecode routines_ can asm "push" & "store" & "pop" (etc) ***from/to*** the `native` machine `stack` , without disturbing the prolog/epilog (by `calling convention` agreed upon) of C·lang compiler.<br>
 P.S. `primitive1Add_` was used as test subject, it performed on _smi_ 3 with _smi_ 4, testing the (`stdcall` with oop receiver) calling convention.
 
