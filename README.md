@@ -2,8 +2,8 @@ Oh, well: a Readme is due and it shall be about design, ideas, desiderata, probl
 
 ### 11. how many machine instruction bytes contributed to performance
 
-The more code is ***made*** available, the more ***shortcuts*** can be realized. Due to the nature of `primitive succeded` I seperate pathes taken into parts belonging to `primitive failed` and all the rest. After `primitive routines` have done their thing (just before they return the result), the size (in bytes) of their `machine instruction` s is accumulated for investigating changes of `instruction path length` and the difference in timing of the test.<br>
-Thus, benchmark test can report difference in performance if not the code in both parts (succeeded|failed) are changed for the same run.
+The more code is ***made*** available, the more ***shortcuts*** can be realized. This I want to investigate with the `SmallObjects` features. Due to the nature of `primitive succeded` I seperate pathes taken into parts belonging to `primitive failed` and all the rest. After `primitive routines` have done their thing (just before they return the result), the size (in bytes) of their `machine instruction` s is accumulated for investigating changes of `instruction path length` in relation to timing of the test.<br>
+Thus, benchmark tests can report difference in performance if not the ***code in both parts*** (succeeded|failed) is changed for the same run.
 
 ### 10. inner (nested) loop before computed jump to branch targets, exit condition for outer loop
 ```
