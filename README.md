@@ -24,7 +24,7 @@ On modern microprocessor chips, the `CPU` runs parallel to a companion `FPU`; an
 ***new problem***/s: spilling changed a bit but it still occurs; strange: the `stack*` is _mem_ , the `struct*` is _mem_ , why shuffle things around which can***not change by read-access*** in the _branch_ target routines … ***remedy***: make the fields `volatile` .<br>
 ***new problem***/s: spilling changed a bit but it still occurs … ***remedy***: declare the `struct*` reference `volatile`.<br>
 ***Now***! ***spilling no more***, and the `Interpreter` _function prolog_ occasionally refrains from handling _call-preserved_ registers :-D<br>
-(part of) mission ***accomplished***: the stack is left untouched by C·lang's inventions, thus the _bytecode routines_ can asm "push" & "store" & "pop" (etc) ***from/to*** the `native` machine `stack` , without disturbing the `Interpreter` prolog/epilog (by `calling convention` agreed upon) of C·lang compiler.<br>
+(part of) mission ***accomplished***: the stack is left untouched by C·lang's inventions, thus the _bytecode routines_ can asm "push" & "store" & "pop" (etc) ***from/to their frame*** in the `native` machine `stack` , without disturbing the `Interpreter` prolog/epilog (by `calling convention` agreed upon) of C·lang compiler.<br>
 P.S. `primitive1Add_` was used as test subject, it performed on _smi_ 3 with _smi_ 4, using [builtin arithmetic with overflow checking](https://gcc.gnu.org/onlinedocs/gcc/Integer-Overflow-Builtins.html), validating by experiment the (`stdcall` with oop receiver) calling convention.<br>
 Of note: in the `primitive` routines there is ***no restriction*** for C·lang on the use of the stack.
 
