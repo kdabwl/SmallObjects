@@ -17,10 +17,10 @@ For literals in methods, the compiler records neither a `class oop` nor a `metho
  
 !Object eachⁱin: someObject equivⁱin: otherObject!
  | approval := self ifTrue: [true] ifFalse: [false] | "MustBeBoolean"
-  1 to: self privateºinstSize do: [:ⁱth|
+  1 to: someObject privateºinstSize do: [:ⁱth|
    (someObject privateºinstVarAt: ⁱth) = (otherObject privateºinstVarAt: ⁱth)
     or: [^approval].
-  ]. 1 to: self privateºbasicSize do: [:ⁱth|
+  ]. 1 to: otherObject privateºbasicSize do: [:ⁱth|
    (someObject privateºbasicAt: ⁱth) = (otherObject privateºbasicAt: ⁱth)
     or: [^approval].
   ]. ^approval not! !
