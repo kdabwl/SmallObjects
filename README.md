@@ -1,5 +1,10 @@
 Oh, well: a Readme is due and it shall be about validatory experiments, ideas, desiderata, problems and how that was made to work. I'll make the Readme like a parchment and add new sections top down (click _outline_ button). Enjoy!
 
+### 13. the first use case for (someObject = otherObject) occurs to the compiler,
+
+where equivalent literals are the same == object. And in the SmallObjects system, there cannot be a literal that is = another but not == another (saves space and serves as a query feature when users of some specific literal are browsed). Searching for equivalent objects in memory is a matter that can easily be done AoT.<br>
+… more on &lt;circularity&gt; and &lt;descriptors&gt; …
+
 ### 12. adaptive frame boundary shifting for enabling more tailcalls
 
 The improvement through tailcalls has two points, for they omit two things: execution of the current epilog and execution of the next prolog, only to "find" that the next context is practically identically to the current one (linkage at same position and to same locations on the stack).<br>
