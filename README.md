@@ -33,13 +33,13 @@ Of note: in the `primitive` routines there is ***no restriction*** for C·lang o
 In `SmallObjects` I want that each individual `ObjectMemory` instance _theHeap_ is firmly associated k:k with one of the _core_ s in my _CPU_ chip. Having worked with _multiprocessor machines_ since the earliest steps of my work-life, I can't wait that my notebook performs an `oop`-rogram on all its cylinders (_core_ s) and that the (_programmable_ ) task at hand is divided into smaller _and parallel_ pieces of work, to then combine the interim results for the big whole.<br>
 Here is my first draft, derived from the classic `benchFib` performance benchmark:
 ```
-!Integer benchFib "handy message-heavy benchmark"
- | subtask := [(self -1) benchFib]. interim |
+!Integer benchFib "handy message-heavy benchmark"!
+ | subtask := [(self -1) benchFib] blockCopy. interim |
  self < 2 ifTrue: [^1].
  " at >= 43 (on -m32), LargeInteger arithmetic takes over from SmallInteger "
- self < 43 ifFalse: [interim := subtask promiseUnless: theHeap·idlerCount < 1]
- ifTrue: [interim := subtask "do all myself"].
- ^(self -2) benchFib +interim value +1!!
+ self < 43 ifFalse: [interim := subtask promiseUnless: theHeap idlerCount < 1]
+  ifTrue: [interim := subtask "do all myself"].
+ ^(self -2) benchFib +(interim "future" value +1)! !
 ```
 ### 8. inviting some C·compiler to jump for nirvana
 ```
