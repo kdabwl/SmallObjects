@@ -44,7 +44,7 @@ Here is my first draft, derived from the classic `benchFib` performance benchmar
 ### 8. inviting some C·compiler to jump for nirvana
 ```
  static oop jumpTargetRoutines[] = {(oop)&&¹st,(oop)&&²nd,…,(oop)&&ⁿth};
- asm goto("jump *%0"::"r"(jumpTargetRoutines[ⁱth])::¹st,²nd,…,ⁿth /*labels*/);
+ asm goto("jmp *%0"::"r"(jumpTargetRoutines[ⁱth])::¹st,²nd,…,ⁿth /*labels*/);
 ```
 This statement I want for jumping according to `computed label jumpTargetRoutines[ⁱth]`; there are _not_ many [asm goto](https://gcc.gnu.org/onlinedocs/gcc/Extended-Asm.html#:~:text=asm%20goto%20allows) examples which demonstrate the previous. At first, the statement does not encode some `jump` to any of the label references %l1, %l2, etc -- yet the label names are passed proforma so that C·compiler knows expected branch targets. At second, the computed target is passed to the statement -- which indeed emits code for the effective jump. There are many things to consider: how the routines at the branch targets have to be set up, how to act (re: control flow) and refer to variables, eventually go further in their enclosing `Interpreter loop`; these tests are work in progress at the time of this writing.
 
