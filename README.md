@@ -3,8 +3,28 @@ Oh, well: a Readme is due and it shall be about validatory experiments, ideas, d
 ### 13. the first use case for (someObject = otherObject) occurs to the compiler,
 
 where equivalent literals are the same == object. And in the SmallObjects system, there cannot be a literal that is = another but not == another (saves space and serves as a query feature when users of some specific literal are browsed). Searching for equivalent literals in memory is a matter that can easily be done AoT in O(n).<br>
-… more on &lt;circularity&gt; and &lt;descriptors&gt; …
+For literals in methods, the compiler records neither a class oop nor a method oop; both would force the runtime to access the respective instance in memory just to get information about arity or bits of some variaEnum. SmallObjects has learned this from Big Iron B5000, where a descriptor informs about its respective instance before one of the parts in memory is accessed (details about the present associated object table are given elsewhere). This means that no measures are needed to avoid cyclicality via oop accesses. This brings us back to the equivalence decision that the compiler needs; we write its code:<br>
+```
+!Object = anOther!
+ (self privateºinstSize) = (anOther privateºinstSize) or: [^false].
+ (self privateºbasicSize) = (anOther privateºbasicSize) or: [^false].
+ ^false "on ¹st discrepancy, of" eachⁱin: self equivⁱin: anOther! !
 
+!Object ~= anOther!
+ (self privateºinstSize) = (anOther privateºinstSize) or: [^true].
+ (self privateºbasicSize) = (anOther privateºbasicSize) or: [^true].
+ ^true "on ¹st discrepancy, of" eachⁱin: self equivⁱin: anOther! !
+ 
+!Object eachⁱin: someObject equivⁱin: otherObject!
+ | approval := self ifTrue: [true] ifFalse: [false] | "MustBeBoolean"
+  1 to: self privateºinstSize do: [:ⁱth|
+   (someObject privateºinstVarAt: ⁱth) = (otherObject privateºinstVarAt: ⁱth)
+    or: [^approval].
+  ]. 1 to: self privateºbasicSize do: [:ⁱth|
+   (someObject privateºbasicrAt: ⁱth) = (otherObject privateºbasicAt: ⁱth)
+    or: [^approval].
+ ]. ^approval not! !
+```
 ### 12. adaptive frame boundary shifting for enabling more tailcalls
 
 The improvement through tailcalls has two points, for they omit two things: execution of the current epilog and execution of the next prolog, only to "find" that the next context `frame` is practically identically to the current one (linkage at same position and to same locations on the stack).<br>
