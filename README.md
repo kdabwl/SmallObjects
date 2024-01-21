@@ -7,7 +7,7 @@ where equivalent literals are the same == object. And in the SmallObjects system
 
 ### 12. adaptive frame boundary shifting for enabling more tailcalls
 
-The improvement through tailcalls has two points, for they omit two things: execution of the current epilog and execution of the next prolog, only to "find" that the next context is practically identically to the current one (linkage at same position and to same locations on the stack).<br>
+The improvement through tailcalls has two points, for they omit two things: execution of the current epilog and execution of the next prolog, only to "find" that the next context `frame` is practically identically to the current one (linkage at same position and to same locations on the stack).<br>
 A comparison between `*Stream*·#nextPut:` and the subsequently executed `*Array*·#at:put:` shows why a tailcall is desired here but prevented: the next free `position` determined by `#nextPut:` is missing.<br>
 To enable this, `position` is defined as the first `local` variable and the frame boundary (swapping fields) is trivially moved so that `position` now belongs to the arguments.<br>
 If this also swaps the arguments, there is nothing to prevent a tailcall from `#nextPut:` to `#at:put:`.<br>
