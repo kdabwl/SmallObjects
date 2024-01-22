@@ -1,5 +1,8 @@
 Oh, well: a Readme is due and it shall be about validatory experiments, ideas, desiderata, problems and how that was made to work. I'll make the Readme like a parchment and add new sections top down (click _outline_ button). Enjoy!
 
+### 14. one 2×jump sandwich per ~1×machine code operation, with some looping sauce on top
+… &lt;section&gt; writeup in progress …
+
 ### 13. the first use case for (someObject = otherObject) occurs to the compiler,
 
 where equivalent literals are the same == object. And in the SmallObjects system, there cannot be a literal that is = another but not == another (saves space and serves as a query feature when users of some specific literal are browsed). Searching for equivalent literals in memory is a matter that can easily be done AoT in O(n).<br>
