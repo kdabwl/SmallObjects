@@ -70,14 +70,14 @@ Of note: in the `primitive` routines there is ***no restriction*** for C·lang o
 
 ### 9. recursive multiprocessing in parallel performing cores
 
-In `SmallObjects` I want that each individual `ObjectMemory` instance _theHeap_ is firmly associated k:k with one of the _core_ s in my _CPU_ chip. Having worked with _multiprocessor machines_ since the earliest steps of my work-life, I can't wait that my notebook performs an `oop`-rogram on all its cylinders (_core_ s) and that the (_programmable_ ) task at hand is divided into smaller _and parallel_ pieces of work, to then combine the interim results for the big whole.<br>
+In `SmallObjects` I want that each individual `ObjectMemory` instance _tlsMemory_ is firmly associated k:k with one of the _core_ s in my _CPU_ chip. Having worked with _multiprocessor machines_ since the earliest steps of my work-life, I can't wait that my notebook performs an `oop`-rogram on all its cylinders (_core_ s) and that the (_programmable_ ) task at hand is divided into smaller _and parallel_ pieces of work, to then combine the interim results for the big whole.<br>
 Here is my first draft, derived from the classic `benchFib` performance benchmark:
 ```
 !Integer benchFib "handy message-heavy benchmark"!
  | subtask := [(self -1) benchFib] blockCopy. interim |
  self < 2 ifTrue: [^1].
  " at >= 43 (on -m32), LargeInteger arithmetic takes over from SmallInteger "
- self < 43 ifFalse: [interim := subtask promiseUnless: theHeap idlerCount < 1]
+ self < 43 ifFalse: [interim := subtask promiseUnless: tlsMemory idlerCount < 1]
   ifTrue: [interim := subtask "do all myself"].
  ^(self -2) benchFib +(interim "future" value +1)! !
 ```
@@ -129,9 +129,9 @@ When talented craftsmen come to your construction site (of ideas, what else), th
 ```
 This shall be the general scheme for contract work; we now add `garbage collection`:
 ```
- | tideLevel := theHeap garbageCollectMost; tideLevel. requestResponse := self … |
+ | tideLevel := tlsMemory garbageCollectMost; tideLevel. requestResponse := self … |
  requestResponse := requestResponse taskDesired perform: #realization with: requestResponse.
- theHeap garbageCollectMost: "the previous" tideLevel.
+ tlsMemory garbageCollectMost: "the previous" tideLevel.
  ^requestResponse
 ```
 In the `booting from roots` system, the `garbageCollectMost*` selectors can be omitted (or return default/s) without change of function, if it is known what the craftsmen need -- but this is the case during  `booting from roots`.<br>
@@ -148,7 +148,7 @@ typedef struct Small$Object {
 #pragma pack()
 } Small$Object;
 ```
-This is sufficient for the `compiler` to emit proper offset in machine instructions for the memory reference `anOop->inMemory`. Also, the `class header` bits are not seen (but can be addressed using `&anOop[0]` as base for offset). Thus, the first few `fixed field`s of `theHeap` (see 1. memory layout, below) are declared:
+This is sufficient for the `compiler` to emit proper offset in machine instructions for the memory reference `anOop->inMemory`. Also, the `class header` bits are not seen (but can be addressed using `&anOop[0]` as base for offset). Thus, the first few `fixed field`s of `tlsMemory` (see 1. memory layout, below) are declared:
 ```
 typedef struct Object$Memory {
 #pragma pack(1)
@@ -190,15 +190,15 @@ N.B. [tailcall](https://clang.llvm.org/docs/AttributeReference.html#musttail) is
 ### 1. the SmallObjects memory & layout & format info
 
 From section 0 (below) there are already two classes, `Character` and `SmallInteger` which must describe their respective instances. This and all other, their `depictor` ing notwithstanding, objects reside in ObjectMemory. And every _Class object_ has (at least) a _formatInfo_ field which tells the layout (i.e. number of fixed fields, and characteristics of `variable data`) of new (and old, existing) instances. For easing the work of allocation and garbage collection, instances allocated in memory are prepended by a `class header` and their variable part by another, `varia data` header. The `varia data` and its header does not occupy space in memory if the `formatInfo` spec says so. Thus the instances are arranged consecutively in object memory -- until a `garbage collector` finds they are no longer referenced.
-The `ObjectMemory` instance `theHeap` has several _constant_ fields, for: the `nil` oop, also the `true` and `false` oop's. Beeing an instance, `ObjectMemory` has fields and `varia data`, but above all it has `absolute` location (warranted by the `OS`):
+The `ObjectMemory` instance `tlsMemory` has several _constant_ fields, for: the `nil` oop, also the `true` and `false` oop's. Beeing an instance, `ObjectMemory` has fields and `varia data`, but above all it has `absolute` location (warranted by the `OS`):
 ```
  _Thread_local oop Thread$isolated$Heap;
 ```
 This `oop` is assigned (trivial from `sbrk`, elaborate from `mmap`) once the `main` (or other launcher) gets control. The `_Thread_local` storage class has became rather bugfree on many platforms. In `SmallObjects` it is used this way:
 ```
- ObjectMemory* theHeap = (ObjectMemory*)Thread$isolated$Heap;
+ ObjectMemory* tlsMemory = (ObjectMemory*)Thread$isolated$Heap;
 ```
-All other objects in memory can only be stored in `theHeap` and the allocated space it describes. The  `varia data` items of `theHeap` instance are indexed by `classId` bits from the `class header` of instances (or defaults for `depictor`'s). After the last `varia data` item of `theHeap` begins the zone of resident objects (up to the `tideLevel` mark), then the zone of jetsam (up to the `shoreline` mark). The fields `tideLevel` and `shoreline` belong to the `fixed fields` of the ObjectMemory instance (many other not mentioned here). Surprise: all this is accessible from ordinary code and therefore from the SmallObjects `Interpreter`.
+All other objects in memory can only be stored in `tlsMemory` and the allocated space it describes. The  `varia data` items of `tlsMemory` instance are indexed by `classId` bits from the `class header` of instances (or defaults for `depictor`'s). After the last `varia data` item of `tlsMemory` begins the zone of resident objects (up to the `tideLevel` mark), then the zone of jetsam (up to the `shoreline` mark). The fields `tideLevel` and `shoreline` belong to the `fixed fields` of the ObjectMemory instance (many other not mentioned here). Surprise: all this is accessible from ordinary code and therefore from the SmallObjects `Interpreter`.
 
 ### 0. how came the term `oop` into the project? the closest I found was:
 ```
