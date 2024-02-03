@@ -1,5 +1,13 @@
 Oh, well: a Readme is due and it shall be about validatory experiments, ideas, desiderata, problems and how that was made to work. I'll make the Readme like a parchment and add new sections top down (click _outline_ button). Enjoy!
 
+### 15. executing `42 benchFib` with recursive somersault
+
+A subset of the bytecode has been completed and executes `42 benchFib` (with recursive somersault) in ***47 seconds***, calling the arithmetic 2,600,966,656 times. Already for `41 benchFib` the counters had to be made `long long`. Whoever wants to measure `43 benchFib` must first implement LargeInteger routines.<br>
+
+<sub><sup>Fineprint·:~$ lsb_release -d `&&` cat /proc/cpuinfo | grep -i 'model name' | sort -u<br>
+Output: Ubuntu 20.04.6 LTS `&&` 11th Gen Intel(R) Core(TM) i5-1135G7 @ 2.40GHz.</sup></sub>
+
+
 ### 14. one 2×jump sandwich per ~1×machine code operation, with some looping sauce on top
 
 The interpreter requires coding for {push.store.pop} U {divert.jump.return} U {compute.check}, so 3 bits of the first byte of code are occupied. Three further bits can be used to address up to 7 elements in arguments, local variables, literals and intrinsics (primitive routines); another bit helps to differentiate between these areas. More can then be achieved with a second byte, which contributes a further 7 bits for addressing (then, some 2¹° elements). The two bytes next to each other differ in their sign (the first positive, the second negative), the bytes are concatenated and the negative sign bit disappears. This describes the coding; we will omit further details here. It may be interesting to note that ***zero if's (z'if's) are needed in source code***, to follow the path to a bytecode routine.<br>
