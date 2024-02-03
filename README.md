@@ -2,8 +2,33 @@ Oh, well: a Readme is due and it shall be about validatory experiments, ideas, d
 
 ### 15. executing `42 benchFib` with recursive somersault
 
-A subset of the bytecode has been completed and executes `42 benchFib` (with recursive somersault) in ***47 seconds***, calling the arithmetic 2,600,966,656 times. Already for `41 benchFib` the counters had to be made `long long`. Whoever wants to measure `43 benchFib` must first implement LargeInteger routines.<br>
-
+A subset of the bytecode has been completed and executes `42 benchFib` (with recursive somersault) in ***47 seconds***, calling the arithmetic 2,600,966,656 times. Already for `41 benchFib` the counters had to be made `long long`. Whoever wants to measure `43 benchFib` must first implement LargeInteger routines. Printout of the benchFib codons:<br>
+```
+ 1      a·push from ⁱth arg, 1
+ 2      a·push smi 2
+ 3      a·dispatch ⁱth intrinsic, 3
+ 4      b·nop
+ 5      a·jump onFalse + ⁱth·some byte, 2
+ 6      a·push smi 1
+ 7      a·method return, 1+arity, 1
+ 8      a·push from ⁱth arg, 1
+ 9      a·push smi 2
+10      a·dispatch ⁱth intrinsic, 2
+11      b·nop
+12      b·divert to ⁱth method, 4
+13      a·push from ⁱth arg, 1
+14      a·push smi 1
+15      a·dispatch ⁱth intrinsic, 2
+16      b·nop
+17      b·divert to ⁱth method, 4
+18      a·dispatch ⁱth intrinsic, 1
+19      b·nop
+20      a·push smi 1
+21      a·dispatch ⁱth intrinsic, 1
+22      b·nop
+23      a·method return, 1+arity, 1
+24      a·push nil
+```
 <sub><sup>Fineprint·:~$ lsb_release -d `&&` cat /proc/cpuinfo | grep -i 'model name' | sort -u<br>
 Output: Ubuntu 20.04.6 LTS `&&` 11th Gen Intel(R) Core(TM) i5-1135G7 @ 2.40GHz.</sup></sub>
 
