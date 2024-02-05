@@ -121,7 +121,7 @@ Here is my first draft, derived from the classic `benchFib` performance benchmar
 ```
 This statement I want for jumping according to `computed label jumpTargetRoutines[ⁱth]`; there are _not_ many [asm goto](https://gcc.gnu.org/onlinedocs/gcc/Extended-Asm.html#:~:text=asm%20goto%20allows) examples which demonstrate the previous. At first, the statement does not encode some `jump` to any of the label references %l1, %l2, etc -- yet the label names are passed proforma so that C·compiler knows expected branch targets. At second, the computed target is passed to the statement -- which indeed emits code for the effective jump. There are many things to consider: how the routines at the branch targets have to be set up, how to act (re: control flow) and refer to variables, eventually go further in their enclosing `Interpreter loop`; these tests are work in progress at the time of this writing.
 
-### 7. the adaptive specialist and its 
+### 7. the adaptive specialist and its carryall
 
 In the previous section (6. below) need arised for `private field`s which belong to _subcontractors_. In the `SmallObjects` system this has rather little to do with _inheritance_, the specialists are trained in fields whose intersection (material type & form, tools, etc) is mostly empty (that makes any pair of _subcontractors_ specialists). And the individual specialists posess sort of `carryall` which they do not share with other _subcontractor_ s.<br>
 The solution in `SmallObjects` is to maintain `private field`s (the `carryall`) ***before the first*** data item of the `variaPart` (of the _patron_ instance, e.g. a `ByteString` ;-). And the `class header` bits have  (plenty of room ;-) for the count 0…15 of `private field`s.<br>
