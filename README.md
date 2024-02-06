@@ -1,5 +1,17 @@
 Oh, well: a Readme is due and it shall be about validatory experiments, ideas, desiderata, problems and how that was made to work. I'll make the Readme like a parchment and add new sections top down (click _outline_ button). Enjoy!
 
+### 16. Blocks, initialization, cloning, evaluation
+
+The following is an example of requirements for bytecode Interpreter design.<br>
+Blocks are ***initialized as prototypes***, in SmallObjects, when execution goes thru their ***declaration***, and later cloned for ***evaluation***, so that any fresh instance reflects always the ***state that was initially assigned***.<br>
+Intentionally, the (prototypical) block ***imports from the scope of the declaring*** side -- and the compiler alway adds self as imported:
+```
+ | … variableInNewScope ← expression ± values from existing scope … |
+ " also holds for " | … self ← self … | " they have different scope ".
+```
+Suppose a `St80` method with args & tmps and with blocks which also have args & tmps: if each of the variables has a different name, then the blocks are isolated from each other and from the method. However, this is not true when a block is `evaluated recursively` … therefore the SmallObjects system requires blocks to be initialized (in `proto­typical` form) before they can be used in a `message` and only `cloned block` entities (instances) can be evaluated -- the compiler knows how to do that.<br>
+Of note: when evaluating a cloned block entity, any dynamic value can be passed as argument for evaluation (and therefore, will `emerge in the scope of the declaring` side); this we inherit from `St80` regardless of the above.
+
 ### 15. executing `42 benchFib` with recursive somersault
 
 A subset of the bytecode has been completed and executes `42 benchFib` (with recursive somersault) in ***47 seconds***, calling the arithmetic 2,600,966,656 times. Already for `41 benchFib` the counters had to be made `long long`. Whoever wants to measure `43 benchFib` must first implement LargeInteger routines. Printout of the benchFib codons (a· and b· subsets):<br>
