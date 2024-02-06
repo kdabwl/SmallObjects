@@ -2,7 +2,7 @@ Oh, well: a Readme is due and it shall be about validatory experiments, ideas, d
 
 ### 15. executing `42 benchFib` with recursive somersault
 
-A subset of the bytecode has been completed and executes `42 benchFib` (with recursive somersault) in ***47 seconds***, calling the arithmetic 2,600,966,656 times. Already for `41 benchFib` the counters had to be made `long long`. Whoever wants to measure `43 benchFib` must first implement LargeInteger routines. Printout of the benchFib codons:<br>
+A subset of the bytecode has been completed and executes `42 benchFib` (with recursive somersault) in ***47 seconds***, calling the arithmetic 2,600,966,656 times. Already for `41 benchFib` the counters had to be made `long long`. Whoever wants to measure `43 benchFib` must first implement LargeInteger routines. Printout of the benchFib codons (a· and b· subsets):<br>
 ```
  1      a·push from ⁱth arg, 1
  2      a·push smi 2
@@ -15,12 +15,12 @@ A subset of the bytecode has been completed and executes `42 benchFib` (with rec
  9      a·push smi 2
 10      a·dispatch ⁱth intrinsic, 2
 11      b·nop
-12      b·divert to ⁱth method, 4
+12      b·invoke ⁱth method, 4
 13      a·push from ⁱth arg, 1
 14      a·push smi 1
 15      a·dispatch ⁱth intrinsic, 2
 16      b·nop
-17      b·divert to ⁱth method, 4
+17      b·invoke ⁱth method, 4
 18      a·dispatch ⁱth intrinsic, 1
 19      b·nop
 20      a·push smi 1
@@ -54,7 +54,7 @@ For literals in methods, the compiler records neither a `class oop` nor a `metho
  ^true "on ¹st discrepancy, of" eachⁱin: self equivⁱin: anOther! !
  
 !Object eachⁱin: someObject equivⁱin: otherObject!
- | approval := self ifTrue: [true] ifFalse: [false] | "MustBeBoolean"
+ | approval ← self ifTrue: [true] ifFalse: [false] | "MustBeBoolean"
   1 to: someObject privateºinstSize do: [:ⁱth|
    (someObject privateºinstVarAt: ⁱth) = (otherObject privateºinstVarAt: ⁱth)
     or: [^approval].
@@ -107,11 +107,11 @@ In `SmallObjects` I want that each individual `ObjectMemory` instance _tlsMemory
 Here is my first draft, derived from the classic `benchFib` performance benchmark:
 ```
 !Integer benchFib "handy message-heavy benchmark"!
- | subtask := [(self -1) benchFib] blockCopy. interim |
+ | subtask ← [(self -1) benchFib] blockCopy. interim |
  self < 2 ifTrue: [^1].
  " at >= 43 (on -m32), LargeInteger arithmetic takes over from SmallInteger "
- self < 43 ifFalse: [interim := subtask promiseUnless: tlsMemory idlerCount < 1]
-  ifTrue: [interim := subtask "do all myself"].
+ self < 43 ifFalse: [interim ← subtask promiseUnless: tlsMemory idlerCount < 1]
+  ifTrue: [interim ← subtask "do all myself"].
  ^(self -2) benchFib +(interim "future" value +1)! !
 ```
 ### 8. inviting some C·compiler to jump for nirvana
@@ -156,14 +156,14 @@ Based on the previous, the `fallback method` for `primitiveAdd_` is, implemented
 
 When talented craftsmen come to your construction site (of ideas, what else), they bring tools and materials with them; and they clean up before they leave -- but they handover the `result`s to the patron. This is on offer for garbage collection (on `boot level, root level` and beyond) in the `SmallObjects runtime` -- and things have already been provided below. We add the concept of `temporary variables`, they are pushed on the stack during the `prolog` of `method activation`, in `Smalltalk syntax` (plus initialization during declaration):
 ```
- | requestResponse := self provide input for craftsmen. |
- requestResponse := requestResponse taskDesired perform: #realization with: requestResponse.
+ | requestResponse ← self provide input for craftsmen. |
+ requestResponse ← requestResponse taskDesired perform: #realization: with: requestResponse.
  ^requestResponse
 ```
 This shall be the general scheme for contract work; we now add `garbage collection`:
 ```
- | tideLevel := tlsMemory garbageCollectMost; tideLevel. requestResponse := self … |
- requestResponse := requestResponse taskDesired perform: #realization with: requestResponse.
+ | tideLevel ← tlsMemory garbageCollectMost; tideLevel. requestResponse ← self … |
+ requestResponse ← requestResponse taskDesired perform: #realization: with: requestResponse.
  tlsMemory garbageCollectMost: "the previous" tideLevel.
  ^requestResponse
 ```
@@ -187,7 +187,7 @@ typedef struct Object$Memory {
 #pragma pack(1)
  unsigned char $i$n$M$e$m$o$r$y$[sizeof(Small$Object)];
  oop nilObj /* boot's ²nd object */;
- oop formatInfo /* 36r686m32, or 36rarm32f */;
+ oop formatInfo /* 36r486M32 | 36rArmM32 */;
  oop systemKeys /* anArray associated ↔ k:k ↔ with items in my variaPart */;
  oop trueObj, falseObj;
  oop heapCircle /* collection of forked threads */;
@@ -215,7 +215,7 @@ One of the goals in SmallObjects is, to do high-level code as much as essential,
 ```
 The difference between `dispatch` and `invoke` is just the causing bytecode, same so for the returned value. However, the `primitive` may fail -- and therefore must delegate to a `fallback method`. In that case the operation is like:
 ```
- theMethod := aFallbackMethod /* acts like tailcall */;
+ theMethod ← aFallbackMethod /* acts like tailcall */;
 ```
 Since the `arity` of the current `activation` is same as that of aFallbackMethod, nothing else is to worry about (given the assignment does set up for `next instruction`). In another posting the role and viability of `theMethod` will be addressed, here we note that it is a `special variable` belonging to, what momentarily the current `activation` is.</br>
 N.B. [tailcall](https://clang.llvm.org/docs/AttributeReference.html#musttail) is in developer's hand for C·lang.
