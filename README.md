@@ -4,7 +4,7 @@ Oh, well: a Readme is due and it shall be about validatory experiments, ideas, d
 
 The following is an example of requirements for bytecode Interpreter design.<br>
 Blocks are ***initialized as prototypes***, in SmallObjects, when execution goes thru their ***declaration***, and later cloned for ***evaluation***, so that any fresh instance reflects always the ***state that was initially assigned***.<br>
-Intentionally, the (prototypical) block ***imports from the scope of the declaring*** side -- and the compiler alway adds `self` as imported:
+Intentionally, the (prototypical) block ***imports from the scope of the declaring*** side -- and the compiler always adds `self` as imported:
 ```
  | … variableInNewScope ← expression ± values from existing scope … |
  " also holds for " | … self ← self … | " they have different scope ".
