@@ -9,7 +9,7 @@ Intentionally, the (prototypical) block ***imports from the scope of the declari
  | … variableInNewScope ← expression ± values from existing scope … |
  " also holds for " | … self ← self … | " they have different scope ".
 ```
-Suppose a `St80` method with args & tmps and with blocks which also have args & tmps: if each of the variables has a different name, then the blocks are isolated from each other and from the method. However, this is not true when a block is `evaluated recursively` … therefore the SmallObjects system requires blocks to be initialized (in `proto­typical` form) before they can be used in a `message` and only `cloned block` entities (instances) can be evaluated -- the compiler knows how to do that.<br>
+Suppose a `St80` method with args & tmps and with blocks which also have args & tmps: if each of the variables has a different name, then the blocks are isolated from each other and from the method. However, this is not true when a block is `evaluated recursively` … therefore the SmallObjects system requires blocks to be initialized (in `proto­typical` form) before they can be used in a `message` and only `cloned block` entities (instances) can be evaluated -- the compiler knows how to do that (prototype and instances are stored in the stack).<br>
 Of note: when evaluating a cloned block entity, any dynamic value can be passed as argument for evaluation (and therefore, will `emerge in the scope of the declaring` side); this we inherit from `St80` regardless of the above.
 
 ### 15. executing `42 benchFib` with recursive somersault
