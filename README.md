@@ -84,6 +84,7 @@ A comparison between `*Stream*·#nextPut:` and the subsequently executed `*Array
 To enable this, `position` is defined as the first `local` variable and the frame boundary (swapping fields) is trivially moved so that `position` now belongs to the arguments.<br>
 If this also swaps the arguments, there is nothing to prevent a tailcall from `#nextPut:` to `#at:put:`.<br>
 This practically saves more time (compared to pushing arguments anew + epilog + prolog handling) than the trivial shifting of the frame boundary can cost -- and this for by far the most frequent usecase of Streams.
+P.S. there can be 2 entries for tail called methods, e.g. the default one does type / range check which the 2nd one can assume to have been already done by the caller.
 
 ### 11. how many machine instruction bytes contributed to performance
 
