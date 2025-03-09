@@ -81,9 +81,9 @@ It is no coincidence that the same `approval` routine works for true and false.
 
 The improvement through tailcalls has two points, for they omit two things: execution of the current epilog and execution of the next prolog, only to "find" that the next context `frame` is practically identically to the current one (linkage at same position and to same locations on the stack).<br>
 A comparison between `*Stream*·#nextPut:` and the subsequently executed `*Array*·#at:put:` shows why a tailcall is desired here but prevented: the next free `position` determined by `#nextPut:` is missing.<br>
-To enable this, `position` is defined as the first `local` variable and the frame boundary (swapping fields) is trivially moved so that `position` now belongs to the arguments.<br>
+To enable this (extended tail), `position` is defined as the first `local` variable and the frame boundary (swapping fields) is trivially moved so that `position` now belongs to the arguments.<br>
 If this also swaps the arguments, there is nothing to prevent a tailcall from `#nextPut:` to `#at:put:`.<br>
-This practically saves more time (compared to pushing arguments anew + epilog + prolog handling) than the trivial shifting of the frame boundary can cost -- and this for by far the most frequent usecase of Streams.
+This practically saves more time (compared to pushing arguments anew + epilog + prolog handling) than the trivial shifting of the frame boundary can cost -- and this for by far the most frequent usecase of Streams.<br>
 P.S. there can be 2 entries for tail called methods, e.g. the default one does type / range check which the 2nd one can assume to have been already done by the caller.
 
 ### 11. how many machine instruction bytes contributed to performance
