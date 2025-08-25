@@ -1,5 +1,55 @@
 Oh, well: a Readme is due and it shall be about validatory experiments, ideas, desiderata, problems and how that was made to work. I'll make the Readme like a parchment and add new sections top down (click _outline_ button). Enjoy!
 
+### 17. Since Simula 67 (and dynamically typed languages) at runtime
+
+, machines perform a method (selector) lookup in classes' listings and formally the following holds (premises first):<pre>
+!Number methodsFor: 'comparing'!
+< aNumber "Answer whether the receiver is less than the argument."
+!Integer methodsFor: 'comparing'!
+< aNumber "Answer true if the receiver is less than aNumber, else answer false."
+!Float methodsFor: 'comparing'!
+< aNumber "Answer true if the receiver is less than aNumber, else answer false."
+!Fraction methodsFor: 'comparing'!
+< aNumber "Answer true if the receiver is less than aNumber."
+!Character methodsFor: 'comparing'!
+< aCharacter "Answer true if the receiver's value is less than aCharacter's value."
+!String methodsFor: 'comparing'!
+< aString "Answer true if the receiver collates before aString."
+!Symbol methodsFor: 'comparing'!
+< aSymbol "Answer true if the receiver collates before aSymbol."
+!Date methodsFor: 'comparing'!
+< aDate "Answer true if the receiver is earlier than aDate."
+!Time methodsFor: 'comparing'!
+< aTime "Answer true if the receiver is earlier than aTime."
+!Magnitude methodsFor: 'comparing'!
+< aMagnitude "Answer whether the receiver is less than the argument, aMagnitude."</pre>
+Now, the following holds (from more specific to more general, then by name): many
+implementations of Polymorphic Inline Cache could have the following lists and
+order (say, when frequency of use is equal):<pre>
+!Magnitude methodsFor: 'comparing'!
+< aMagnitude "tail-call effective implementors, automatically known at compile-time"
+&nbsp;(self class)
+&nbsp;&nbsp;inheritsFrom: Character ifTrue: [theMethod := Character>>#<];
+&nbsp;&nbsp;inheritsFrom: Date ifTrue: [theMethod := Date>>#<];
+&nbsp;&nbsp;inheritsFrom: Fraction ifTrue: [theMethod := Fraction>>#<];
+&nbsp;&nbsp;inheritsFrom: Float ifTrue: [theMethod := Float>>#<];
+&nbsp;&nbsp;inheritsFrom: Integer ifTrue: [theMethod := Integer>>#<]
+&nbsp;&nbsp;inheritsFrom: Number ifTrue: [theMethod := Number>>#<];
+&nbsp;&nbsp;inheritsFrom: Time ifTrue: [theMethod := Time>>#<].
+&nbsp;self subclassResponsibility
+!SequenceableCollection methodsFor: 'comparing'!
+< aCollection "tail-call effective implementors, automatically known at compile-time"
+&nbsp;(self class)
+&nbsp;&nbsp;inheritsFrom: Symbol ifTrue: [theMethod := Symbol>>#<];
+&nbsp;&nbsp;inheritsFrom: String ifTrue: [theMethod := String>>#<].
+&nbsp;self subclassResponsibility</pre>
+Instead of telling the &lt;`type`&gt; to the compiler, I propose to raise the practiced '*'
+prefix in message categories out of anonymity by naming the conceptual module in which
+implementors appear (separated by a middot), examples:<pre>
+&nbsp;&nbsp;3 num·< 4
+&nbsp;&nbsp;'bad' seq·< 'good'</pre>
+So the above can now read Magnitude (etc) methodsFor: 'num·comparing', SequenceableCollection (etc) methodsFor: 'seq·comparing' and: the compiler still knows the rest & the runtime can no longer find doesNotUnderstand & the IDE can assist (has context for making suggestions) and/or reject/default ambigous expressions; also the Debugger can help and find that 'bad' < 'good' belongs to the seq·comparing highlightable layer in software composition.
+
 ### 16. Blocks, initialization, cloning, evaluation
 
 The following is an example of requirements for bytecode Interpreter design.<br>
