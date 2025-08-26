@@ -29,19 +29,19 @@ order (say, when frequency of use is equal):<pre>
 !Magnitude methodsFor: 'comparing'!
 < aMagnitude "tail-call effective implementors, automatically known at compile-time"
 &nbsp;(self class)
-&nbsp;&nbsp;inheritsFrom: Character ifTrue: [theMethod := Character>>#<];
-&nbsp;&nbsp;inheritsFrom: Date ifTrue: [theMethod := Date>>#<];
-&nbsp;&nbsp;inheritsFrom: Fraction ifTrue: [theMethod := Fraction>>#<];
-&nbsp;&nbsp;inheritsFrom: Float ifTrue: [theMethod := Float>>#<];
-&nbsp;&nbsp;inheritsFrom: Integer ifTrue: [theMethod := Integer>>#<]
-&nbsp;&nbsp;inheritsFrom: Number ifTrue: [theMethod := Number>>#<];
-&nbsp;&nbsp;inheritsFrom: Time ifTrue: [theMethod := Time>>#<].
+&nbsp;&nbsp;inHierarchyLeq: Character ifTrue: [theMethod := Character>>#<];
+&nbsp;&nbsp;inHierarchyLeq: Date ifTrue: [theMethod := Date>>#<];
+&nbsp;&nbsp;inHierarchyLeq: Fraction ifTrue: [theMethod := Fraction>>#<];
+&nbsp;&nbsp;inHierarchyLeq: Float ifTrue: [theMethod := Float>>#<];
+&nbsp;&nbsp;inHierarchyLeq: Integer ifTrue: [theMethod := Integer>>#<]
+&nbsp;&nbsp;inHierarchyLeq: Number ifTrue: [theMethod := Number>>#<];
+&nbsp;&nbsp;inHierarchyLeq: Time ifTrue: [theMethod := Time>>#<].
 &nbsp;self subclassResponsibility
 !SequenceableCollection methodsFor: 'comparing'!
 < aCollection "tail-call effective implementors, automatically known at compile-time"
 &nbsp;(self class)
-&nbsp;&nbsp;inheritsFrom: Symbol ifTrue: [theMethod := Symbol>>#<];
-&nbsp;&nbsp;inheritsFrom: String ifTrue: [theMethod := String>>#<].
+&nbsp;&nbsp;inHierarchyLeq: Symbol ifTrue: [theMethod := Symbol>>#<];
+&nbsp;&nbsp;inHierarchyLeq: String ifTrue: [theMethod := String>>#<].
 &nbsp;self subclassResponsibility</pre>
 Instead of telling the &lt;`type`&gt; to the compiler, I propose to raise the practiced '*'
 prefix in message categories out of anonymity by naming the conceptual module in which
@@ -201,7 +201,7 @@ But where can the _private field_ be stored, without disturbing the existing int
 ### 5. parting-up decisions towards a responsive free-programmable Polymorphic Inline Cache
 
 There are situations where a `method activation` can see that the decisions made, in a call site, for branching, [could have been more to the case](https://rmod-files.lille.inria.fr/Team/Texts/Papers/Milo18a-SICP-InlineCache.pdf#:~:text=lack%20of%20static%20type%20information%20in%20dynamically). If the decisions were a piece of bits, we want to move that piece either closer to the callee or (in parts) back to the call site. This results in a basically free-programmable Polymorphic Inline Cache. When the compiler has no choice, as in e.g. compiling `self zork`, it defers to guard the sender side with `self doesNotUnderstand: #zork`.<br>
-If, on the other side, there can only be one implementor of e.g. `#evaluate:in:to:notifying:ifFail:`, it is sufficient to guard the implementor side with `(self class inheritsFrom: theMethod methodClass) or: [self doesNotUnderstand: theMethod selector]`. Contrast this with `method lookup` where `selectors` (in perhaps huge dictionaries on perhaps plenty of levels of hierarchy, unprogrammable at runtime …) are searched for -- here we 'only' check the `inheritance relation` path.<br>
+If, on the other side, there can only be one implementor of e.g. `#evaluate:in:to:notifying:ifFail:`, it is sufficient to guard the implementor side with `(self class inHierarchyLeq: theMethod methodClass) or: [self doesNotUnderstand: theMethod selector]`. Contrast this with `method lookup` where `selectors` (in perhaps huge dictionaries on perhaps plenty of levels of hierarchy, unprogrammable at runtime …) are searched for -- here we 'only' check the `inheritance relation` path.<br>
 The `SmallObjects compiler` can automate this and add a &lt;pragma …&gt; to the `compiled method`. This is made available for editing the `method source`. At the present time, the mechanism/s can be added manually but there is as yet no tool support. Yet the `primitiveMethodclassGuardOr_` is already available and used.<br>
 Based on the previous, the `fallback method` for `primitiveAdd_` is, implemented in `Number`:
 ```
