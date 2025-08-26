@@ -33,9 +33,9 @@ order (say, when frequency of use is equal):<pre>
 &nbsp;&nbsp;inHierarchyLeq: Date ifTrue: [theMethod := Date>>#<];
 &nbsp;&nbsp;inHierarchyLeq: Fraction ifTrue: [theMethod := Fraction>>#<];
 &nbsp;&nbsp;inHierarchyLeq: Float ifTrue: [theMethod := Float>>#<];
-&nbsp;&nbsp;inHierarchyLeq: Integer ifTrue: [theMethod := Integer>>#<]
-&nbsp;&nbsp;inHierarchyLeq: Number ifTrue: [theMethod := Number>>#<];
-&nbsp;&nbsp;inHierarchyLeq: Time ifTrue: [theMethod := Time>>#<].
+&nbsp;&nbsp;inHierarchyLeq: Integer ifTrue: [theMethod := Integer>>#<];
+&nbsp;&nbsp;inHierarchyLeq: Time ifTrue: [theMethod := Time>>#<];
+&nbsp;&nbsp;inHierarchyLeq: Number ifTrue: [theMethod := Number>>#<].
 &nbsp;self subclassResponsibility
 !SequenceableCollection methodsFor: 'comparing'!
 < aCollection "tail-call effective implementors, automatically known at compile-time"
