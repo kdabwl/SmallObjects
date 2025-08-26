@@ -48,7 +48,7 @@ prefix in message categories out of anonymity by naming the conceptual module in
 implementors appear (separated by a middot), examples:<pre>
 &nbsp;&nbsp;3 num·< 4
 &nbsp;&nbsp;'bad' seq·< 'good'</pre>
-So the above can now read Magnitude (etc) methodsFor: 'num·comparing', SequenceableCollection (etc) methodsFor: 'seq·comparing' and: the compiler still knows the rest & the runtime less often finds doesNotUnderstand & the IDE can assist (has context for making suggestions) and/or reject/default ambigous expressions; also the Debugger can help and find that 'bad' < 'good' belongs to the seq·comparing highlightable layer in software composition.
+So the above can now read Magnitude (etc) methodsFor: 'num·comparing', SequenceableCollection (etc) methodsFor: 'seq·comparing' and: the compiler still knows the rest & the runtime less often finds doesNotUnderstand & the IDE can assist (has context for making suggestions) and/or reject/default ambigous expressions; also the Debugger can help and find that 'bad' < 'good' belongs to the seq·comparing layer, which is to be highlighted in software composition.
 
 ### 16. Blocks, initialization, cloning, evaluation
 
