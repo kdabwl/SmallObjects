@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<svg id="galaxy" height="480" width="480" style="display:inline"
+<svg id="galaxy" height="360" width="360" style="display:inline"
    xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1">
  <desc>Bouncing balls in a rotating circle. Author: Alwin Bruno</desc>
- <rect id="backdrop" x="0" y="0" width="480" height="480" style="stroke-width:1;fill:white" />
- <circle id="circle" cx="240" cy="240" r="240" style="stroke=blue;stroke-width:3;fill:black" />
- <g id="circus" fill="none" transform="rotate(0,240,240)" >
+ <rect id="backdrop" x="0" y="0" width="360" height="360" style="stroke-width:1;fill:white" />
+ <circle id="circle" cx="180" cy="180" r="180" style="stroke=blue;stroke-width:3;fill:black" />
+ <g id="circus" fill="none" transform="rotate(0,180,180) scale=0.75" >
   <path id="path1" d="m 0,240 480,0 z" style="stroke:white;stroke-width:1">
    <set attributeName="stroke" attributeType="XML" to="none" begin="10s" />
   </path>
