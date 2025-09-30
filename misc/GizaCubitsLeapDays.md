@@ -1,4 +1,4 @@
-# Giza Decanal Windowsy<br>and Leap Days Rundown
+# Giza Decanal Windows<br>and Leap Days Rundown
 
 ## (1 Cubit = 1 Lunation ≈ 29.53059 Days),<br>countering Neugebauer’s nescience
 ### starting lunation 0 by ~4.54 days earlier moves leap<br>day from k=6 to k=33, no change if ~14.54 later
