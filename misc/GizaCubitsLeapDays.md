@@ -1,7 +1,7 @@
 # Giza Decanal Windowsy<br>and Leap Days Rundown
 
 ## (1 Cubit = 1 Lunation ≈ 29.53059 Days),<br>countering Neugebauer’s nescience
-### starting lunation 0 by ~4.54 days earlier moves leap day from k=6 to k=33
+### starting lunation 0 by ~4.54 days earlier moves leap<br>day from k=6 to k=33, no change if ~14.54 later
 |Jupiter period v.s. stepsize(T) =<br>dynamic window size | Leap Days per<br>half of window |
 |--------|-----------|
 | k=1, X=146.72, Y=146.5, Z=0.22, Years=11.85 | 1st=3, 2nd=3 |
