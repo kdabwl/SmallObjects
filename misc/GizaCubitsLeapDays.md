@@ -2,7 +2,7 @@
 
 ## (1 Cubit = 1 Lunation ≈ 29.53059 Days), countering Neugebauer’s nescience
 
-| **Window from k×(T) Step to k×Jupiter Period (Lunations) [Window Size]** | **Leap Days per Half of the Window** |
+| **Window from k×(T) Step to k×Jupiter<br>Period (Lunations) [Window Size]** | **Leap Days per Half<br>of the Window** |
 |------------------------------------------------------------------------|-------------------------------------|
 | **k=1: 146.5 to 146.715** <br> 146.715 - 146.5 ≈ 0.215 | 1st half: 2, 2nd half: 2 |
 | **k=2: 293.0 to 293.43** <br> 293.43 - 293 ≈ 0.43 | 1st half: 5, 2nd half: 5 |
